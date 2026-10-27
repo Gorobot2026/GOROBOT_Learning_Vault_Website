@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5942b9">
+  <meta name="description" content="GO ROBOT Learning Vault ศูนย์รวมเกมเขียนโปรแกรม เอกสาร และสื่อการเรียนรู้หุ่นยนต์">
+  <title>GO ROBOT Learning Vault | คลังเกมและสื่อการเรียนรู้</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./config.js"></script>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="เมนูหลัก">
+      <div class="sidebar-top">
+        <div class="wordmark">
+          <span class="logo-mark" aria-hidden="true">⌘</span>
+          <span class="wordmark-copy"><strong>GO<span>ROBOT</span></strong><small>LEARNING VAULT</small></span>
+        </div>
+        <button class="nav-close" id="closeMenu" aria-label="ปิดเมนู">✕</button>
+      </div>
+      <div class="side-section-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <button type="button" class="side-link active" id="homeNav">
+          <span data-icon="LayoutDashboard"></span><span>ภาพรวม</span>
+          <span class="side-link-trail">›</span>
+        </button>
+        <div class="side-subhead">คลังสื่อการเรียนรู้</div>
+        <div id="sideCategoryNav"></div>
+      </nav>
+      <div class="side-grow"></div>
+      <div class="sidebar-bottom">
+        <div class="side-help">
+          <span class="side-help-icon" data-icon="Sparkles"></span>
+          <strong>ทุกการเรียนรู้<br>เริ่มต้นที่นี่</strong>
+          <p>รวมทุกเกมและสื่อสำคัญ<br>ในพื้นที่เดียว</p>
+        </div>
+        <a class="side-link side-settings" id="adminSidebar" href="#">
+          <span data-icon="Settings2"></span><span>จัดการคลังสื่อ</span><span class="admin-lock">🔒</span>
+        </a>
+        <div class="sidebar-footer"><span class="footer-led"></span> GO ROBOT LEARNING SYSTEM <span>V2.0</span></div>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="mobile-brand">
+          <button type="button" class="icon-plain" id="openMenu" aria-label="เปิดเมนู">☰</button>
+          <span class="logo-mark" aria-hidden="true">⌘</span>
+        </div>
+        <div class="breadcrumb">Workspace <span>›</span> <strong id="breadcrumbLabel">Learning library</strong></div>
+        <div class="top-actions">
+          <span class="system-pill"><span class="live-pulse"></span> LEARNING SPACE</span>
+          <a class="top-admin-btn" id="adminTop" href="#"><span data-icon="Settings2"></span> Admin Portal</a>
+          <span class="top-avatar">GR</span>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="welcome-row">
+          <div>
+            <span class="eyebrow"><span class="eyebrow-dot"></span> DIGITAL LEARNING PLATFORM</span>
+            <h1>ศูนย์รวมสื่อการเรียนรู้ <span class="wave">👋</span></h1>
+            <p>ค้นหาเกมสนุก ๆ เอกสาร บทเรียน และสื่อการสอนทั้งหมดได้ในที่เดียว</p>
+          </div>
+          <div class="today-label"><span class="today-icon">✦</span> Explore • Learn • Create</div>
+        </div>
+
+        <section class="hero" aria-label="พื้นที่การเรียนรู้ Go Robot">
+          <div class="hero-grid"></div>
+          <div class="hero-copy">
+            <div class="hero-kicker"><span class="hero-kicker-dot"></span> YOUR CREATIVE LEARNING SPACE</div>
+            <h2>เรียนรู้ให้สนุก<br><em>สร้างสรรค์ได้ไม่จำกัด.</em></h2>
+            <p>รวบรวมทุกเครื่องมือสำหรับนักสร้างหุ่นยนต์รุ่นใหม่<br class="desktop-only">พร้อมให้คุณค้นพบและเริ่มต้นได้ทุกเวลา</p>
+            <button type="button" class="hero-cta" id="exploreButton">สำรวจคลังสื่อ <span data-icon="ArrowUpRight"></span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-halo"></div>
+            <div class="art-platform"></div>
+            <div class="art-robot">
+              <div class="art-robot-head"><span class="ant ant-left"></span><span class="ant ant-right"></span><span class="eye"></span><span class="eye"></span><span class="robot-mouth"></span></div>
+              <div class="art-robot-body"><div class="robot-core">⌘</div></div>
+            </div>
+            <div class="float-card card-a">🎮</div><div class="float-card card-b">📖</div><div class="float-card card-c">🏆</div>
+            <div class="art-star star-a">✦</div><div class="art-star star-b">✧</div>
+          </div>
+          <div class="hero-watermark">G<span>∞</span>ROBOT</div>
+        </section>
+
+        <div class="stats-grid">
+          <div class="stat-box"><span class="stat-icon purple" data-icon="Layers"></span><div><strong id="statCategories">00</strong><p>หมวดหมู่ทั้งหมด</p></div><span class="stat-arrow">↗</span></div>
+          <div class="stat-box"><span class="stat-icon blue" data-icon="Gamepad2"></span><div><strong id="statLinks">00</strong><p>เกมและลิงก์เว็บไซต์</p></div><span class="stat-arrow">↗</span></div>
+          <div class="stat-box"><span class="stat-icon orange" data-icon="FileText"></span><div><strong id="statFiles">00</strong><p>เอกสารและไฟล์</p></div><span class="stat-arrow">↗</span></div>
+        </div>
+
+        <section class="section categories-section">
+          <div class="section-heading">
+            <div><span class="section-overline">EXPLORE CATEGORIES</span><h2>เลือกหมวดหมู่ที่สนใจ</h2><p>จัดระเบียบทุกเนื้อหา เพื่อให้คุณเจอสิ่งที่ต้องการได้ทันที</p></div>
+            <span class="section-counter" id="categoryCounter">0 CATEGORIES</span>
+          </div>
+          <div class="category-grid" id="categoryGrid"></div>
+        </section>
+
+        <section class="section featured-section" id="featuredSection" hidden>
+          <div class="section-heading"><div><span class="section-overline">HANDPICKED FOR YOU</span><h2>⭐ รายการแนะนำ</h2></div></div>
+          <div class="featured-row" id="featuredGrid"></div>
+        </section>
+
+        <section class="section library-section" id="library">
+          <div class="section-heading library-heading">
+            <div><span class="section-overline">RESOURCE LIBRARY</span><h2>คลังเกมและสื่อทั้งหมด</h2><p>เลือกเปิดเว็บไซต์ หรือดาวน์โหลดไฟล์ได้ทันที</p></div>
+            <div class="library-count"><span id="filteredCount">0</span> รายการ</div>
+          </div>
+          <div class="library-toolbar">
+            <div class="search-wrap"><span data-icon="Search"></span><input id="searchInput" type="search" placeholder="ค้นหาชื่อเกม เอกสาร หรือคำสำคัญ..." autocomplete="off" aria-label="ค้นหาสื่อ"><span class="search-kbd">SEARCH</span></div>
+            <button type="button" class="reload-button" id="reloadTop" title="อัปเดตข้อมูลจาก Google Sheets">↻ <span>อัปเดต</span></button>
+            <div class="resource-filters" role="group" aria-label="กรองชนิดสื่อ">
+              <button type="button" class="selected" data-type="all">ทั้งหมด</button>
+              <button type="button" data-type="link">🔗 ลิงก์</button>
+              <button type="button" data-type="file">📄 ไฟล์</button>
+            </div>
+          </div>
+          <div class="filter-bar" id="categoryFilters"></div>
+          <div id="resourceGrid" class="resource-grid"></div>
+          <div id="emptyState" class="empty-card">
+            <div class="empty-graphic"><span data-icon="FolderOpen"></span><span>＋</span></div>
+            <h3 id="emptyTitle">พื้นที่สำหรับไอเดียดี ๆ กำลังรออยู่</h3>
+            <p id="emptyMessage">ยังไม่มีรายการ กรุณาเพิ่มสื่อจากหน้าผู้ดูแล</p>
+            <button class="btn primary" id="refreshButton" type="button">โหลดข้อมูลอีกครั้ง</button>
+          </div>
+        </section>
+        <footer class="page-footer"><span>© 2026 GO ROBOT • Learning Vault</span><span>Made for curious minds. <span class="footer-heart">✦</span></span></footer>
+      </main>
+    </div>
+  </div>
+  <div class="mobile-scrim" id="mobileScrim" hidden></div>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>

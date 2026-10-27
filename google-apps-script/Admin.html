@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GO ROBOT • Admin Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#24213a;--muted:#817e94;--purple:#684bd2;--deep:#4c36a6;--line:#eae8f2;--bg:#f7f7fc;--card:#fff;--good:#17a77a;--bad:#dc4779}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);font:14px/1.6 'Prompt','Inter',sans-serif;background:var(--bg)}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}[hidden]{display:none!important}
+    .auth-wrap{min-height:100vh;display:grid;place-items:center;padding:25px;background:radial-gradient(ellipse at 85% 15%,#e9e3ff,transparent 40%),radial-gradient(ellipse at 15% 90%,#dbeafe,transparent 38%),var(--bg)}
+    .login{width:min(460px,100%);background:#fff;border:1px solid #ede9f5;border-radius:28px;box-shadow:0 24px 90px #37246f18;padding:42px}.logo{display:flex;align-items:center;gap:13px;font-family:Inter,sans-serif;font-size:18px;font-weight:850;letter-spacing:-.7px}.logo b{color:var(--purple)}.logomark{width:43px;height:43px;display:grid;place-items:center;background:linear-gradient(135deg,#8765ea,#5030b0);color:#fff;border-radius:14px;box-shadow:0 9px 22px #6047be40;font-size:22px}.eyebrow{color:var(--purple);font-size:11px;letter-spacing:2px;font:800 11px Inter,sans-serif}.login h1{margin:40px 0 8px;line-height:1.2;font-size:31px;letter-spacing:-.6px}.muted{color:var(--muted)}.login p{margin:0 0 26px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:15px}.field label{font-weight:600;font-size:12px;color:#47435e}.field input,.field textarea,.field select{background:#fff;border:1px solid #dfdceb;border-radius:12px;outline:none;width:100%;padding:12px 14px;transition:.2s;color:var(--ink)}.field textarea{resize:vertical;min-height:84px}.field input:focus,.field textarea:focus,.field select:focus{border-color:#8c73e5;box-shadow:0 0 0 4px #8d74e91c}.field small{color:var(--muted);font-size:11px}
+    .btn{display:inline-flex;align-items:center;gap:8px;justify-content:center;border-radius:12px;padding:12px 17px;border:1px solid var(--line);background:#fff;color:#403b57;font-weight:600;transition:transform .15s,background .15s}.btn:hover{transform:translateY(-1px);background:#f8f7fc}.btn.primary{background:linear-gradient(135deg,#7657de,#5132b0);color:#fff;border:none;box-shadow:0 7px 16px #553abb2b}.btn.primary:hover{background:#5035b5}.btn.danger{color:#c42d5e;border-color:#f3d3df;background:#fff8fb}.btn.small{padding:8px 12px;font-size:12px;border-radius:9px}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.full{width:100%}.hint{margin-top:25px;border-radius:14px;padding:14px;background:#f8f6ff;color:#6a6381;font-size:12px}.hint strong{color:var(--purple)}
+    .app{min-height:100vh}.top{position:sticky;top:0;z-index:8;background:#ffffffed;backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:13px max(22px,calc((100vw - 1300px)/2));display:flex;align-items:center;justify-content:space-between;gap:18px}.top-right{display:flex;align-items:center;gap:10px}.live{display:inline-flex;align-items:center;gap:7px;color:#3a977c;background:#e7f9f3;padding:7px 12px;border-radius:999px;font:700 11px Inter,sans-serif}.dot{width:7px;height:7px;background:#32bc8e;border-radius:50%}.wrap{max-width:1300px;margin:auto;padding:37px 24px 90px}.heading{display:flex;gap:18px;justify-content:space-between;align-items:flex-end;flex-wrap:wrap}.heading h1{font-size:31px;letter-spacing:-.8px;line-height:1.3;margin:9px 0 6px}.heading p{margin:0;color:var(--muted)}
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:27px 0}.metric{background:#fff;border:1px solid var(--line);padding:22px 25px;border-radius:18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 5px 20px #20144305}.metric strong{font:800 32px Inter,sans-serif;display:block;letter-spacing:-1px}.metric small{font-size:12px;color:var(--muted)}.metric .bubble{width:49px;height:49px;border-radius:15px;display:grid;place-items:center;font-size:23px;background:#f1edff}
+    .panel{background:#fff;border-radius:20px;border:1px solid var(--line);box-shadow:0 5px 25px #20144306;overflow:hidden}.panel-head{display:flex;align-items:center;gap:15px;flex-wrap:wrap;justify-content:space-between;padding:21px 24px;border-bottom:1px solid var(--line)}.tabs{display:flex;gap:5px;padding:4px;background:#f4f2fa;border-radius:12px}.tabs button{background:transparent;border:0;border-radius:9px;padding:9px 17px;color:#75718a;font-size:13px;font-weight:600}.tabs button.active{background:#fff;color:var(--deep);box-shadow:0 2px 7px #24124814}.tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.search{border:1px solid var(--line);border-radius:10px;padding:9px 12px;min-width:220px;outline:none}.search:focus{border-color:#8c73e5}.entries{padding:10px 15px 20px}.entry{display:grid;grid-template-columns:55px minmax(0,1fr) auto;gap:17px;align-items:center;padding:16px 11px;border-bottom:1px solid #f0eef6}.entry:last-child{border-bottom:0}.entry-icon{height:55px;width:55px;display:grid;place-items:center;border-radius:15px;background:linear-gradient(135deg,#eee9ff,#d8cfff);font-size:25px;overflow:hidden}.entry-icon.blue{background:#e6f1ff}.entry-icon.teal{background:#e1f9f4}.entry-icon.pink{background:#ffe9f5}.entry-icon.orange{background:#fff1df}.entry-icon.indigo{background:#e9eaff}.entry-icon img{width:100%;height:100%;object-fit:cover}.entry h3{font-weight:700;font-size:15px;margin:0 0 3px}.entry p{margin:0;color:var(--muted);font-size:12px;max-width:730px;overflow-wrap:anywhere}.entry-meta{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}.chip{display:inline-flex;align-items:center;border-radius:999px;padding:3px 10px;background:#f2effc;color:#5e4cac;font-size:10px;font-weight:700}.chip.green{color:#128963;background:#e8fbf3}.chip.gray{color:#79748c;background:#f3f2f7}.actions{display:flex;gap:7px}.nothing{text-align:center;padding:60px 20px;color:var(--muted)}.nothing div{font-size:36px;margin-bottom:12px}
+    dialog{border:1px solid var(--line);border-radius:22px;padding:0;width:min(630px,calc(100vw - 28px));max-height:min(91vh,850px);box-shadow:0 30px 90px #1b0f4370;overflow:auto}dialog::backdrop{background:#1c1630ad;backdrop-filter:blur(5px)}.modal-head{padding:24px 27px 17px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-head h2{margin:0;font-size:21px}.close{border:0;background:#f4f3f8;border-radius:9px;width:32px;height:32px;font-size:20px}.modal-body{padding:23px 27px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.modal-actions{padding:16px 27px 24px;display:flex;justify-content:flex-end;gap:10px}.uploadbox{border:1px dashed #bcaeea;border-radius:13px;padding:15px;background:#faf8ff}.uploadbox input{max-width:100%;padding:5px 0;border:0;background:transparent}.uploadbox small{display:block;margin-top:6px}.checkrow{display:flex;align-items:center;gap:10px;padding:8px 0}.checkrow input{width:17px;height:17px;accent-color:var(--purple)}.form-divider{border:0;border-top:1px solid var(--line);margin:20px 0}
+    .toast{position:fixed;bottom:24px;right:24px;z-index:30;background:#2c2444;color:#fff;border-radius:12px;padding:13px 19px;max-width:min(430px,calc(100vw - 40px));box-shadow:0 12px 30px #24154b40;font-size:12px}.toast.error{background:#b52b57}.busy{position:fixed;inset:0;z-index:28;background:#ffffffae;display:grid;place-items:center;backdrop-filter:blur(2px)}.busy>div{border-radius:14px;background:#fff;box-shadow:0 15px 50px #24154b26;padding:20px 30px;font-weight:700;color:var(--purple)}
+    @media(max-width:750px){.top{padding:12px 17px}.top-right .live{display:none}.top .logo{font-size:14px}.wrap{padding:25px 15px}.heading h1{font-size:25px}.metrics{gap:8px}.metric{padding:14px 13px}.metric strong{font-size:23px}.metric .bubble{display:none}.panel-head{padding:14px}.tools{width:100%}.search{flex:1;min-width:120px}.entry{grid-template-columns:42px minmax(0,1fr);gap:10px}.entry-icon{height:42px;width:42px}.entry .actions{grid-column:2}.actions .btn{font-size:11px}.two{grid-template-columns:1fr}.modal-body{padding:18px}.modal-head{padding:16px 19px}.modal-actions{padding:15px 18px}.login{padding:27px}}
+  </style>
+</head>
+<body>
+  <section class="auth-wrap" id="authScreen">
+    <div class="login">
+      <div class="logo"><span class="logomark">⌘</span><span>GO<b>ROBOT</b><br><span style="font-size:10px;letter-spacing:2px;font-weight:700;color:#948cae">LEARNING VAULT</span></span></div>
+      <h1>Admin <span style="color:var(--purple)">Portal.</span></h1>
+      <p class="muted">จัดการเกม สื่อการเรียนรู้ หมวดหมู่ และไฟล์ทั้งหมดจากที่เดียว</p>
+      <form id="loginForm">
+        <div class="field"><label for="adminPassword">รหัสผ่านผู้ดูแลระบบ</label><input id="adminPassword" type="password" placeholder="กรอกรหัส Admin" required autocomplete="current-password"></div>
+        <button class="btn primary full" id="loginButton" type="submit">เข้าสู่ระบบอย่างปลอดภัย →</button>
+      </form>
+      <div class="hint"><strong>เริ่มต้นใช้งานครั้งแรก?</strong> เปิด Google Sheet → เมนู <strong>GO ROBOT</strong> → <strong>ตั้ง/เปลี่ยนรหัสผ่าน Admin</strong> รหัสจะถูกเก็บในระบบหลังบ้าน ไม่ได้อยู่ใน GitHub</div>
+    </div>
+  </section>
+
+  <div class="app" id="adminScreen" hidden>
+    <header class="top">
+      <div class="logo"><span class="logomark">⌘</span><span>GO<b>ROBOT</b> <span style="font-size:10px;font-weight:600;letter-spacing:1px;color:#8f89a2">/ ADMIN</span></span></div>
+      <div class="top-right"><span class="live"><span class="dot"></span> GOOGLE SHEETS CONNECTED</span><button class="btn small" id="refreshBtn">↻ รีเฟรช</button><button class="btn small" id="logoutBtn">ออกจากระบบ</button></div>
+    </header>
+    <main class="wrap">
+      <div class="heading"><div><span class="eyebrow">CONTENT MANAGEMENT SYSTEM</span><h1>จัดการคลังการเรียนรู้</h1><p>เพิ่มและแก้ไขเนื้อหา แล้วเว็บไซต์สาธารณะจะอ่านข้อมูลจาก Google Sheets</p></div><button class="btn primary" id="quickCreate">＋ เพิ่มรายการใหม่</button></div>
+      <div class="metrics"><div class="metric"><div><strong id="metricCategories">0</strong><small>หมวดหมู่ทั้งหมด</small></div><div class="bubble">🗂️</div></div><div class="metric"><div><strong id="metricResources">0</strong><small>เกมและสื่อทั้งหมด</small></div><div class="bubble">🚀</div></div><div class="metric"><div><strong id="metricFeatured">0</strong><small>รายการแนะนำ</small></div><div class="bubble">⭐</div></div></div>
+      <section class="panel">
+        <div class="panel-head">
+          <div class="tabs" role="tablist"><button class="active" data-tab="resources" type="button">เกมและสื่อ <span id="tabResourcesCount">0</span></button><button data-tab="categories" type="button">หมวดหมู่ <span id="tabCategoriesCount">0</span></button></div>
+          <div class="tools"><input class="search" id="searchInput" type="search" placeholder="ค้นหารายการ..."><button class="btn primary small" id="addBtn">＋ เพิ่มใหม่</button></div>
+        </div>
+        <div class="entries" id="entries"></div>
+      </section>
+      <p class="muted" style="margin-top:17px;font-size:11px">ℹ️ การลบรายการสื่อไม่ลบไฟล์จริงใน Google Drive เพื่อป้องกันการสูญหายของข้อมูลโดยไม่ตั้งใจ</p>
+    </main>
+  </div>
+
+  <dialog id="editor">
+    <form id="editForm">
+      <div class="modal-head"><h2 id="modalTitle">เพิ่มรายการ</h2><button type="button" class="close" id="closeEditor" aria-label="ปิด">×</button></div>
+      <div class="modal-body" id="modalFields"></div>
+      <div class="modal-actions"><button type="button" class="btn" id="cancelEditor">ยกเลิก</button><button type="submit" class="btn primary" id="saveButton">บันทึกข้อมูล</button></div>
+    </form>
+  </dialog>
+  <div class="busy" id="busy" hidden><div id="busyLabel">กำลังบันทึก...</div></div>
+  <div class="toast" id="toast" hidden role="status"></div>
+
+  <script>
+  (function(){
+    'use strict';
+    var $=function(id){return document.getElementById(id);};
+    var state={token:'',categories:[],resources:[],tab:'resources',query:'',editId:'',editType:''};
+    var icons=['Gamepad2','BookOpen','FileText','Video','Trophy','Bot','Code2','FolderOpen','GraduationCap','Cpu','Puzzle','MonitorPlay','Lightbulb','Wrench','Layers','Rocket','BrainCircuit','Presentation','Music2','Image','Sparkles'];
+    var accents=['purple','blue','teal','orange','pink','indigo'];
+    var glyphs={Gamepad2:'🎮',BookOpen:'📖',FileText:'📄',Video:'🎬',Trophy:'🏆',Bot:'🤖',Code2:'💻',FolderOpen:'📁',GraduationCap:'🎓',Cpu:'⚙️',Puzzle:'🧩',MonitorPlay:'🖥️',Lightbulb:'💡',Wrench:'🔧',Layers:'🗂️',Rocket:'🚀',BrainCircuit:'🧠',Presentation:'📊',Music2:'🎵',Image:'🖼️',Sparkles:'✨'};
+    var esc=function(v){return String(v==null?'':v).replace(/[&<>"']/g,function(x){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x];});};
+    function rpc(name){var args=Array.prototype.slice.call(arguments,1);return new Promise(function(resolve,reject){var runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(reject);runner[name].apply(runner,args);});}
+    function setBusy(on,label){$('busy').hidden=!on;if(label)$('busyLabel').textContent=label;}
+    function toast(message,error){var box=$('toast');box.textContent=String(message);box.classList.toggle('error',!!error);box.hidden=false;clearTimeout(toast.timer);toast.timer=setTimeout(function(){box.hidden=true;},4000);}
+    function fail(err){var msg=String(err&&err.message||err||'เกิดข้อผิดพลาด');toast(msg,true);if(msg.indexOf('เซสชันหมดอายุ')!==-1)showAuth();}
+    function showAuth(){state.token='';$('authScreen').hidden=false;$('adminScreen').hidden=true;$('adminPassword').value='';}
+    function updateData(data){state.categories=Array.isArray(data.categories)?data.categories:[];state.resources=Array.isArray(data.resources)?data.resources:[];render();}
+    function showDashboard(data){updateData(data);$('authScreen').hidden=true;$('adminScreen').hidden=false;}
+    function getCategory(id){return state.categories.find(function(c){return String(c.id)===String(id);});}
+    function validImage(url){return /^https?:\/\//i.test(String(url||''))?esc(url):'';}
+    function imageOrIcon(c){var url=validImage(c.imageUrl);return url?'<img src="'+url+'" alt="">':(glyphs[c.icon]||'📁');}
+    function itemHtml(item){
+      var categoryMode=state.tab==='categories';var cat=categoryMode?item:getCategory(item.categoryId)||{};
+      var id=esc(item.id),title=esc(categoryMode?item.name:item.title),description=esc(item.description||'');
+      var mark=categoryMode?imageOrIcon(item):(validImage(item.coverUrl)?'<img src="'+validImage(item.coverUrl)+'" alt="">':(item.type==='file'?'📄':'🎮'));
+      var meta=categoryMode?'<span class="chip">'+state.resources.filter(function(r){return r.categoryId===item.id;}).length+' รายการ</span>':
+        '<span class="chip">'+esc(cat.name||'ไม่ระบุหมวด')+'</span><span class="chip gray">'+(item.type==='file'?'ไฟล์ดาวน์โหลด':'ลิงก์เว็บไซต์')+'</span>'+(Number(item.featured)?'<span class="chip green">★ แนะนำ</span>':'');
+      return '<article class="entry"><span class="entry-icon '+esc(cat.accent||'purple')+'">'+mark+'</span><div class="entry-main"><h3>'+title+'</h3><p>'+description+'</p><div class="entry-meta">'+meta+'</div></div><div class="actions"><button type="button" class="btn small" data-edit="'+id+'">แก้ไข</button><button type="button" class="btn small danger" data-delete="'+id+'">ลบ</button></div></article>';
+    }
+    function render(){
+      $('metricCategories').textContent=state.categories.length;
+      $('metricResources').textContent=state.resources.length;
+      $('metricFeatured').textContent=state.resources.filter(function(r){return Number(r.featured);}).length;
+      $('tabCategoriesCount').textContent=state.categories.length;
+      $('tabResourcesCount').textContent=state.resources.length;
+      document.querySelectorAll('[data-tab]').forEach(function(b){b.classList.toggle('active',b.dataset.tab===state.tab);});
+      var list=state.tab==='categories'?state.categories:state.resources;
+      var q=state.query.trim().toLocaleLowerCase();
+      if(q)list=list.filter(function(r){return [r.name,r.title,r.description,getCategory(r.categoryId)&&getCategory(r.categoryId).name].join(' ').toLocaleLowerCase().includes(q);});
+      $('entries').innerHTML=list.length?list.map(itemHtml).join(''):'<div class="nothing"><div>✦</div><strong>ยังไม่มีรายการที่ตรงกับการค้นหา</strong><p>กดปุ่ม “เพิ่มใหม่” เพื่อสร้างเนื้อหาได้ทันที</p></div>';
+    }
+    function nextOrder(type){var list=type==='categories'?state.categories:state.resources;return Math.max(0,...list.map(function(x){return Number(x.sortOrder)||0;}))+1;}
+    function field(name,label,value,extra,small){return '<div class="field"><label for="f_'+name+'">'+label+'</label><input id="f_'+name+'" name="'+name+'" value="'+esc(value||'')+'" '+(extra||'')+'>'+(small?'<small>'+small+'</small>':'')+'</div>';}
+    function selectField(name,label,options,value){return '<div class="field"><label for="f_'+name+'">'+label+'</label><select id="f_'+name+'" name="'+name+'">'+options.map(function(opt){return '<option value="'+esc(opt.value)+'" '+(String(value)===String(opt.value)?'selected':'')+'>'+esc(opt.label)+'</option>';}).join('')+'</select></div>';}
+    function options(items){return items.map(function(s){return {value:s,label:s};});}
+    function openEditor(id){
+      var type=state.tab;
+      var item=id?(type==='categories'?state.categories:state.resources).find(function(x){return x.id===id;}):null;
+      if(id&&!item){toast('ไม่พบรายการ กรุณาโหลดข้อมูลใหม่',true);return;}
+      state.editId=id||'';state.editType=type;
+      $('modalTitle').textContent=(item?'แก้ไข':'เพิ่ม')+(type==='categories'?'หมวดหมู่':'เกม / สื่อการเรียนรู้');
+      var html='';
+      if(type==='categories'){
+        html+=field('name','ชื่อหมวดหมู่ *',item&&item.name,'required maxlength="90" placeholder="เช่น เกมเขียนโปรแกรมหุ่นยนต์"');
+        html+='<div class="field"><label for="f_description">คำอธิบายหมวดหมู่</label><textarea name="description" id="f_description" maxlength="300">'+esc(item&&item.description||'')+'</textarea></div>';
+        html+='<div class="two">'+selectField('icon','เลือกไอคอน',icons.map(function(x){return {value:x,label:(glyphs[x]||'◆')+' '+x};}),item&&item.icon||'Gamepad2')+selectField('accent','ธีมสี',options(accents),item&&item.accent||'purple')+'</div>';
+        html+=field('imageUrl','URL รูปภาพแทนไอคอน',item&&item.imageUrl,'type="url" placeholder="https://..."','เว้นว่างเพื่อใช้ไอคอนที่เลือก หรืออัปโหลดรูปด้านล่าง');
+        html+='<div class="field uploadbox"><label>อัปโหลดรูปภาพแทนไอคอน</label><input type="file" id="categoryImage" accept="image/png,image/jpeg,image/webp,image/gif"><small>PNG, JPG, WebP, GIF • รูปภาพที่อัปโหลดจะอยู่ใน Google Drive</small></div>';
+        html+=field('sortOrder','ลำดับแสดงผล',item&&item.sortOrder||nextOrder(type),'type="number" min="1" max="99999" required');
+      }else{
+        html+=field('title','ชื่อเกมหรือสื่อ *',item&&item.title,'required maxlength="130" placeholder="เช่น AGV Mission Simulator"');
+        html+='<div class="field"><label for="f_description">คำอธิบาย</label><textarea name="description" id="f_description" maxlength="600">'+esc(item&&item.description||'')+'</textarea></div>';
+        html+='<div class="two">'+selectField('categoryId','หมวดหมู่ *',state.categories.map(function(c){return {value:c.id,label:c.name};}),item&&item.categoryId||state.categories[0]&&state.categories[0].id||'')+
+          selectField('type','ประเภทสื่อ', [{value:'link',label:'🔗 ลิงก์เว็บไซต์/เกม'},{value:'file',label:'📄 ไฟล์ดาวน์โหลด'}],item&&item.type||'link')+'</div>';
+        html+='<div id="linkFields">'+field('href','URL เกมหรือเว็บไซต์ *',item&&item.href,'type="url" placeholder="https://..."')+'</div>';
+        html+='<div id="fileFields">'+field('fileUrl','URL ดาวน์โหลดไฟล์ *',item&&item.fileUrl,'type="url" placeholder="https://..."','ใช้ลิงก์ไฟล์ที่มีอยู่ หรือเลือกไฟล์ด้านล่างเพื่ออัปโหลด')+
+          field('fileName','ชื่อไฟล์',item&&item.fileName,'maxlength="180" placeholder="เช่น Lesson_01.pdf"')+
+          '<div class="field uploadbox"><label>อัปโหลดไฟล์</label><input type="file" id="resourceFile"><small>สูงสุด 8 MB ต่อไฟล์ • ไฟล์ขนาดใหญ่แนะนำใช้ URL ของ Google Drive</small></div></div>';
+        html+='<hr class="form-divider">';
+        html+=field('coverUrl','URL ภาพปก',item&&item.coverUrl,'type="url" placeholder="https://..."','ถ้าปล่อยว่างจะแสดงปกกราฟิกอัตโนมัติ');
+        html+='<div class="field uploadbox"><label>อัปโหลดภาพปก</label><input type="file" id="coverImage" accept="image/png,image/jpeg,image/webp,image/gif"><small>รูปภาพจะถูกอัปโหลดไป Google Drive อัตโนมัติตอนกดบันทึก</small></div>';
+        html+=field('tags','คำค้น / แท็ก',item&&Array.isArray(item.tags)?item.tags.join(', '):'','maxlength="250" placeholder="AGV, Coding, ESP32"','คั่นแต่ละคำด้วยจุลภาค (, )');
+        html+='<div class="two">'+field('sortOrder','ลำดับแสดงผล',item&&item.sortOrder||nextOrder(type),'type="number" min="1" max="99999" required')+
+          '<div class="field"><label>การแนะนำ</label><label class="checkrow"><input name="featured" type="checkbox" '+(item&&Number(item.featured)?'checked':'')+'> แสดงใน “รายการแนะนำ”</label></div></div>';
+      }
+      $('modalFields').innerHTML=html;
+      if(type==='resources'){
+        $('f_type').addEventListener('change',updateType);
+        $('resourceFile').addEventListener('change',updateType);
+        updateType();
+      }
+      $('editor').showModal();
+      $('modalFields').querySelector('input,select')?.focus();
+    }
+    function updateType(){var file=$('f_type')?.value==='file';$('linkFields').hidden=file;$('fileFields').hidden=!file;$('f_href').required=!file;$('f_fileUrl').required=file&&!$('resourceFile').files.length;}
+    function closeEditor(){$('editor').close();}
+    async function uploadFile(input,kind){
+      if(!input||!input.files||!input.files.length)return null;
+      var file=input.files[0];
+      if(file.size>8*1024*1024)throw new Error('ไฟล์ '+file.name+' ใหญ่กว่า 8 MB');
+      if(kind==='image'&&!/^image\/(png|jpeg|webp|gif)$/.test(file.type))throw new Error('รูปภาพต้องเป็น PNG, JPG, WebP หรือ GIF');
+      setBusy(true,'กำลังอัปโหลด '+file.name+'...');
+      var base64=await new Promise(function(resolve,reject){var reader=new FileReader();reader.onload=function(){resolve(String(reader.result).split(',')[1]);};reader.onerror=function(){reject(new Error('อ่านไฟล์ไม่สำเร็จ'));};reader.readAsDataURL(file);});
+      return rpc('adminUpload',state.token,{kind:kind,fileName:file.name,mimeType:file.type||'application/octet-stream',base64:base64});
+    }
+    async function saveEntry(e){
+      e.preventDefault();
+      var form=$('editForm');if(!form.reportValidity())return;
+      var data=Object.fromEntries(new FormData(form).entries());
+      data.id=state.editId;
+      data.featured=Boolean($('modalFields').querySelector('[name="featured"]')?.checked);
+      try{
+        setBusy(true,'กำลังบันทึกข้อมูล...');
+        if(state.editType==='categories'){
+          var catImage=await uploadFile($('categoryImage'),'image');
+          if(catImage)data.imageUrl=catImage.url;
+          updateData(await rpc('adminSaveCategory',state.token,data));
+        }else{
+          if(data.type==='file'){
+            var file=await uploadFile($('resourceFile'),'file');
+            if(file){data.fileUrl=file.url;data.fileName=file.fileName;}
+          }
+          var cover=await uploadFile($('coverImage'),'image');
+          if(cover)data.coverUrl=cover.url;
+          updateData(await rpc('adminSaveResource',state.token,data));
+        }
+        closeEditor();toast('บันทึกเรียบร้อยแล้ว • Google Sheets อัปเดตแล้ว');
+      }catch(err){fail(err);}finally{setBusy(false);}
+    }
+    async function deleteEntry(id){
+      var isCat=state.tab==='categories';
+      var item=(isCat?state.categories:state.resources).find(function(x){return x.id===id;});
+      if(!item)return;
+      if(!confirm('ยืนยันลบ '+(item.name||item.title)+' ?\nการลบนี้ไม่สามารถกู้คืนจากหน้าจัดการได้'))return;
+      try{setBusy(true,'กำลังลบรายการ...');updateData(await rpc(isCat?'adminDeleteCategory':'adminDeleteResource',state.token,id));toast('ลบรายการเรียบร้อยแล้ว');}
+      catch(err){fail(err);}finally{setBusy(false);}
+    }
+    $('loginForm').addEventListener('submit',async function(e){e.preventDefault();var password=$('adminPassword').value;$('loginButton').disabled=true;
+      try{var auth=await rpc('adminLogin',password);state.token=auth.token;showDashboard(auth.catalog);$('adminPassword').value='';toast('ยินดีต้อนรับเข้าสู่ระบบ GO ROBOT');}
+      catch(err){fail(err);}finally{$('loginButton').disabled=false;}
+    });
+    $('logoutBtn').addEventListener('click',function(){rpc('adminLogout',state.token).catch(function(){});showAuth();});
+    $('refreshBtn').addEventListener('click',async function(){try{setBusy(true,'กำลังโหลดข้อมูลจาก Google Sheets...');updateData(await rpc('adminFetch',state.token));toast('อัปเดตข้อมูลล่าสุดแล้ว');}catch(err){fail(err);}finally{setBusy(false);}});
+    $('quickCreate').addEventListener('click',function(){state.tab='resources';render();if(!state.categories.length){toast('กรุณาสร้างหมวดหมู่ก่อนเพิ่มรายการ',true);state.tab='categories';render();return;}openEditor('');});
+    $('addBtn').addEventListener('click',function(){if(state.tab==='resources'&&!state.categories.length){toast('กรุณาสร้างหมวดหมู่ก่อน',true);return;}openEditor('');});
+    $('searchInput').addEventListener('input',function(e){state.query=e.target.value;render();});
+    document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){state.tab=b.dataset.tab;state.query='';$('searchInput').value='';render();});});
+    $('entries').addEventListener('click',function(e){var edit=e.target.closest('[data-edit]');var del=e.target.closest('[data-delete]');if(edit)openEditor(edit.dataset.edit);if(del)deleteEntry(del.dataset.delete);});
+    $('closeEditor').addEventListener('click',closeEditor);
+    $('cancelEditor').addEventListener('click',closeEditor);
+    $('editForm').addEventListener('submit',saveEntry);
+  })();
+  </script>
+</body>
+</html>
