@@ -133,6 +133,11 @@
     $("breadcrumbLabel").textContent = categoryById(state.category)?.name || "Learning library";
     $("categoryFilters").innerHTML = `<button type="button" data-category="all" class="${state.category==="all"?"active":""}">ทุกหมวดหมู่</button>` +
       state.categories.map(c=>`<button type="button" data-category="${esc(c.id)}" class="${state.category===c.id?"active":""}">${esc(c.name)}</button>`).join("");
+    requestAnimationFrame(updateSidebarScrollHint);
+  }
+  function updateSidebarScrollHint() {
+    const scroller = $("sideCategoryScroll");
+    $("categoryScrollHint").hidden = scroller.scrollHeight <= scroller.clientHeight + 4;
   }
   function render() {
     state.categories.forEach(c => c.count = state.resources.filter(r => String(r.categoryId) === String(c.id)).length);
@@ -233,6 +238,7 @@
     $("mobileScrim").addEventListener("click",closeMenu);
     $("refreshButton").addEventListener("click",loadCatalog);
     $("reloadTop").addEventListener("click",loadCatalog);
+    window.addEventListener("resize",updateSidebarScrollHint);
     document.addEventListener("click",e=>{
       const categoryButton=e.target.closest("[data-category]");
       if(categoryButton) setCategory(categoryButton.dataset.category);
