@@ -49,3 +49,18 @@ body{font-family:'Prompt','Noto Sans Thai','Segoe UI',Tahoma,sans-serif}
 .robot-core{background:#fff;box-shadow:inset 0 0 0 3px #8b7eec;overflow:hidden;padding:3px}
 .robot-core img{width:100%;height:100%;object-fit:contain;display:block}
 @media(max-width:800px){.mobile-brand{gap:10px}}
+
+/* Scroll long category menus independently while logo and admin actions stay fixed. */
+.side-nav{flex:1;min-height:0;overflow:hidden}
+.side-grow{display:none}
+.sidebar-bottom{flex:none}
+.side-category-heading{display:flex;align-items:center;justify-content:space-between;gap:5px;flex:none}
+.side-scroll-hint{font-size:9px;white-space:nowrap;letter-spacing:0;color:#8876cd;background:#f1edff;border-radius:999px;padding:3px 8px;font-weight:800}
+.side-category-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#b9abeb transparent;outline-offset:-3px;padding:3px 5px 15px 0}
+.side-category-scroll::-webkit-scrollbar{width:6px}
+.side-category-scroll::-webkit-scrollbar-track{background:transparent}
+.side-category-scroll::-webkit-scrollbar-thumb{background:#c8baf2;border-radius:99px}
+.side-category-scroll::-webkit-scrollbar-thumb:hover{background:#9277de}
+#sideCategoryNav{display:flex;flex-direction:column;gap:5px}
+.side-category-scroll .side-link{flex:none}
+@media(max-height:670px){.sidebar-top{padding-bottom:14px}.side-help{padding:12px;margin-bottom:10px}.side-help-icon{margin-bottom:5px}.sidebar-footer{padding-top:9px}.side-subhead{margin-top:13px}}
