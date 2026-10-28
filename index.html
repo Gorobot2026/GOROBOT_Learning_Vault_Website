@@ -30,8 +30,13 @@
           <span data-icon="LayoutDashboard"></span><span>ภาพรวม</span>
           <span class="side-link-trail">›</span>
         </button>
-        <div class="side-subhead">คลังสื่อการเรียนรู้</div>
-        <div id="sideCategoryNav"></div>
+        <div class="side-subhead side-category-heading">
+          <span>คลังสื่อการเรียนรู้</span>
+          <span class="side-scroll-hint" id="categoryScrollHint" title="เลื่อนเพื่อดูหมวดหมู่เพิ่มเติม" hidden>↕ เลื่อน</span>
+        </div>
+        <div class="side-category-scroll" id="sideCategoryScroll" tabindex="0" role="region" aria-label="รายการหมวดหมู่ เลื่อนขึ้นหรือลงเพื่อดูเพิ่มเติม">
+          <div id="sideCategoryNav"></div>
+        </div>
       </nav>
       <div class="side-grow"></div>
       <div class="sidebar-bottom">
