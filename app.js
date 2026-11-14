@@ -6,7 +6,14 @@
 
   const cfg = window.GOROBOT_CONFIG || {};
   const $ = (id) => document.getElementById(id);
-  const state = { categories: [], resources: [], category: "all", type: "all", query: "", loading: false, error: "", configured: false };
+  // NEW: state.view = "home" (ภาพรวม) | "trainer"
+  const state = { categories: [], resources: [], category: "all", type: "all", query: "", loading: false, error: "", configured: false, view: "home" };
+
+  // NEW #comment [HIDE_ASSESSMENT]: หมวดหมู่ที่ชื่อมีคำเหล่านี้ (เช่น "Assessment Level 1/2")
+  // จะถูกซ่อนจากหน้าภาพรวมทั้งหมด (เมนูด้านข้าง, การ์ดหมวดหมู่, ตัวกรอง, รายการสื่อ, ตัวเลขสถิติ)
+  // คนที่ต้องใช้ให้เข้าผ่านหน้า Trainer แทน ถ้าจะเปลี่ยนคำ แก้ตรงนี้ที่เดียว
+  const HIDDEN_CATEGORY_PATTERN = /assess|ประเมิน/i;
+
   const sampleCategories = [
     { id: "demo-games", name: "เกมและภารกิจ", description: "เกมเขียนโค้ดและภารกิจหุ่นยนต์", icon: "Gamepad2", accent: "purple" },
     { id: "demo-docs", name: "เอกสารและใบงาน", description: "คู่มือและเอกสารประกอบบทเรียน", icon: "BookOpen", accent: "blue" },
@@ -17,6 +24,8 @@
 
   const paths = {
     LayoutDashboard: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+    // NEW: ไอคอนของเมนู Trainer
+    ClipboardCheck: '<path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
     Gamepad2: '<path d="M6 12h4m-2-2v4m7-2h.01M18 10h.01"/><path d="M6 6h12a4 4 0 0 1 3.9 3l1.1 7a3 3 0 0 1-4.8 2.8L16 17H8l-2.2 1.8A3 3 0 0 1 1 16l1.1-7A4 4 0 0 1 6 6Z"/>',
     BookOpen: '<path d="M12 7v14m0-14C9.5 5 6.3 4.5 3 5v14c3.3-.5 6.5 0 9 2m0-14c2.5-2 5.7-2.5 9-2v14c-3.3-.5-6.5 0-9 2"/>',
     FileText: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Zm0 0v6h6M8 13h8m-8 4h8"/>',
@@ -68,6 +77,9 @@
     clearTimeout(toast.timer);
     toast.timer = setTimeout(() => { target.hidden = true; }, 3500);
   }
+  // NEW: เปิดให้ trainer.js ใช้ toast ตัวเดียวกัน
+  window.GoRobotToast = toast;
+
   function displayIcon(name, image, size = 27) {
     const url = validURL(image);
     return url ? `<img src="${esc(url)}" alt="" loading="lazy" onerror="this.style.display='none'">` : icon(name, size);
@@ -125,12 +137,15 @@
   }
   function renderNavigation() {
     const cats = displayedCategories();
-    $("sideCategoryNav").innerHTML = cats.map(c => `<button type="button" class="side-link category-side ${state.category===c.id?"active":""}" data-category="${esc(c.id)}">
+    const onHome = state.view === "home";
+    // NEW: ไฮไลต์หมวดหมู่/ภาพรวม เฉพาะตอนอยู่หน้าภาพรวม (ถ้าอยู่หน้า Trainer ให้ไฮไลต์ Trainer แทน)
+    $("sideCategoryNav").innerHTML = cats.map(c => `<button type="button" class="side-link category-side ${onHome && state.category===c.id?"active":""}" data-category="${esc(c.id)}">
       <span class="side-icon-tiny accent-${color(c.accent)}">${displayIcon(c.icon,c.imageUrl,15)}</span>
       <span class="nav-name">${esc(c.name)}</span><span class="side-count">${Number(c.count)||0}</span>
     </button>`).join("");
-    $("homeNav").classList.toggle("active", state.category === "all");
-    $("breadcrumbLabel").textContent = categoryById(state.category)?.name || "Learning library";
+    $("homeNav").classList.toggle("active", onHome && state.category === "all");
+    $("trainerNav").classList.toggle("active", !onHome);
+    $("breadcrumbLabel").textContent = onHome ? (categoryById(state.category)?.name || "Learning library") : "Trainer";
     $("categoryFilters").innerHTML = `<button type="button" data-category="all" class="${state.category==="all"?"active":""}">ทุกหมวดหมู่</button>` +
       state.categories.map(c=>`<button type="button" data-category="${esc(c.id)}" class="${state.category===c.id?"active":""}">${esc(c.name)}</button>`).join("");
     requestAnimationFrame(updateSidebarScrollHint);
@@ -164,14 +179,23 @@
     document.querySelectorAll(".resource-filters button").forEach(b=>b.classList.toggle("selected",b.dataset.type===state.type));
   }
 
+  // NEW: สลับระหว่างหน้า "ภาพรวม" (home) กับหน้า "Trainer"
+  function showView(view) {
+    state.view = view === "trainer" ? "trainer" : "home";
+    $("homeView").hidden = state.view !== "home";
+    $("trainerView").hidden = state.view !== "trainer";
+    renderNavigation();
+    closeMenu();
+  }
+
   function setCategory(id) {
     if (id !== "all" && !state.categories.some(c=>String(c.id)===String(id))) {
       toast("หมวดหมู่นี้จะพร้อมใช้งานหลังเชื่อมฐานข้อมูล");
       return;
     }
     state.category = id;
+    showView("home"); // NEW: ถ้าอยู่หน้า Trainer ให้กลับมาหน้าภาพรวมก่อน
     render();
-    closeMenu();
     smoothLibrary();
   }
   function closeMenu() {
@@ -201,8 +225,12 @@
       $("refreshButton").disabled = false;
       if (message) { state.error = message; toast("ไม่สามารถเชื่อม Google Sheets ได้"); }
       else {
-        state.categories = Array.isArray(data.categories) ? data.categories : [];
-        state.resources = Array.isArray(data.resources) ? data.resources : [];
+        const allCategories = Array.isArray(data.categories) ? data.categories : [];
+        const allResources = Array.isArray(data.resources) ? data.resources : [];
+        // NEW #comment [HIDE_ASSESSMENT]: ตัดหมวดหมู่ Assessment (และสื่อในหมวดนั้น) ออกจากหน้าภาพรวม
+        const hiddenIds = new Set(allCategories.filter(c => HIDDEN_CATEGORY_PATTERN.test(String(c.name || ""))).map(c => String(c.id)));
+        state.categories = allCategories.filter(c => !hiddenIds.has(String(c.id)));
+        state.resources = allResources.filter(r => !hiddenIds.has(String(r.categoryId)));
         if (!state.categories.some(c=>String(c.id)===String(state.category))) state.category="all";
       }
       render();
@@ -230,7 +258,9 @@
       if (adminHref) { link.target="_blank";link.rel="noopener noreferrer"; }
       else link.addEventListener("click", e=>{e.preventDefault();toast("กรุณาตั้งค่า Apps Script URL ใน config.js ก่อน");});
     });
-    $("homeNav").addEventListener("click",()=>{state.category="all";render();closeMenu();window.scrollTo({top:0,behavior:"smooth"});});
+    $("homeNav").addEventListener("click",()=>{state.category="all";showView("home");render();window.scrollTo({top:0,behavior:"smooth"});});
+    // NEW: กดเมนู Trainer
+    $("trainerNav").addEventListener("click",()=>{showView("trainer");window.scrollTo({top:0,behavior:"smooth"});});
     $("exploreButton").addEventListener("click",smoothLibrary);
     $("searchInput").addEventListener("input",e=>{state.query=e.target.value;render();});
     $("openMenu").addEventListener("click",()=>{$("sidebar").classList.add("is-open");$("mobileScrim").hidden=false;});
