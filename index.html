@@ -11,8 +11,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="./go-robot-logo.png">
   <link rel="stylesheet" href="./styles.css">
+  <!-- NEW: สไตล์ของหน้า Trainer (scope อยู่ใน .trainer-view เท่านั้น) -->
+  <link rel="stylesheet" href="./trainer.css">
   <script src="./config.js"></script>
   <script src="./app.js" defer></script>
+  <!-- NEW: สคริปต์หน้า Trainer (ต้องโหลดหลัง app.js) -->
+  <script src="./trainer.js" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -28,6 +32,11 @@
       <nav class="side-nav">
         <button type="button" class="side-link active" id="homeNav">
           <span data-icon="LayoutDashboard"></span><span>ภาพรวม</span>
+          <span class="side-link-trail">›</span>
+        </button>
+        <!-- NEW: เมนู Trainer ต้องอยู่ถัดจาก "ภาพรวม" และก่อนหัวข้อ "คลังสื่อการเรียนรู้" -->
+        <button type="button" class="side-link" id="trainerNav">
+          <span data-icon="ClipboardCheck"></span><span>Trainer</span>
           <span class="side-link-trail">›</span>
         </button>
         <div class="side-subhead side-category-heading">
@@ -67,6 +76,34 @@
       </header>
 
       <main class="content">
+        <!-- NEW: หน้า Trainer / Student Review (แสดงเมื่อกดเมนู Trainer) -->
+        <section class="trainer-view" id="trainerView" hidden aria-label="Trainer Student Review">
+          <div class="page-header">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> TRAINER UTILITY</span>
+            <h1 class="page-title">Student Review</h1>
+            <p class="page-subtitle">รวมลิงก์สำหรับประเมินและอัปโหลดรูปภาพ</p>
+          </div>
+
+          <div class="level-drawer-bar" aria-label="เลือกระดับหลักสูตรและเรียงลำดับ">
+            <div id="levelPills" class="level-pills" role="tablist"></div>
+            <button id="sortGenBtn" type="button" class="sort-btn" aria-label="สลับการเรียงลำดับ Gen">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M3 6h13"></path><path d="M3 12h9"></path><path d="M3 18h5"></path><path d="M19 8v10"></path><path d="M16 15l3 3 3-3"></path>
+              </svg>
+              <span id="sortGenLabel">Gen ↑</span>
+            </button>
+          </div>
+
+          <div id="genList" class="gen-list" aria-label="รายการกลุ่มเรียน"></div>
+
+          <!-- #comment [ADMIN_ONLY] ซ่อนปุ่มนี้ถ้าต้องการจำกัด CRUD -->
+          <div class="add-gen-row">
+            <button id="addGenBtn" type="button" class="btn-ghost-add">+ Add Gen</button>
+          </div>
+        </section>
+
+        <!-- NEW: ห่อเนื้อหาหน้า "ภาพรวม" เดิมทั้งหมดไว้ใน #homeView -->
+        <div id="homeView">
         <div class="welcome-row">
           <div>
             <span class="eyebrow"><span class="eyebrow-dot"></span> DIGITAL LEARNING PLATFORM</span>
@@ -139,6 +176,7 @@
             <button class="btn primary" id="refreshButton" type="button">โหลดข้อมูลอีกครั้ง</button>
           </div>
         </section>
+        </div><!-- /#homeView -->
         <footer class="page-footer"><span>© 2026 GO ROBOT • Learning Vault</span><span>Made for curious minds. <span class="footer-heart">✦</span></span></footer>
       </main>
     </div>
