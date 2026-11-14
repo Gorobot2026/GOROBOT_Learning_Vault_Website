@@ -49,11 +49,6 @@
       </nav>
       <div class="side-grow"></div>
       <div class="sidebar-bottom">
-        <div class="side-help">
-          <span class="side-help-icon" data-icon="Sparkles"></span>
-          <strong>ทุกการเรียนรู้<br>เริ่มต้นที่นี่</strong>
-          <p>รวมทุกเกมและสื่อสำคัญ<br>ในพื้นที่เดียว</p>
-        </div>
         <a class="side-link side-settings" id="adminSidebar" href="#">
           <span data-icon="Settings2"></span><span>จัดการคลังสื่อ</span><span class="admin-lock">🔒</span>
         </a>
@@ -104,41 +99,17 @@
 
         <!-- NEW: ห่อเนื้อหาหน้า "ภาพรวม" เดิมทั้งหมดไว้ใน #homeView -->
         <div id="homeView">
-        <div class="welcome-row">
-          <div>
-            <span class="eyebrow"><span class="eyebrow-dot"></span> DIGITAL LEARNING PLATFORM</span>
-            <h1>ศูนย์รวมสื่อการเรียนรู้ <span class="wave">👋</span></h1>
-            <p>ค้นหาเกมสนุก ๆ เอกสาร บทเรียน และสื่อการสอนทั้งหมดได้ในที่เดียว</p>
+        <header class="page-head">
+          <span class="eyebrow"><span class="eyebrow-dot"></span> DIGITAL LEARNING PLATFORM</span>
+          <h1>ศูนย์รวมสื่อการเรียนรู้</h1>
+          <p>ค้นหาเกม เอกสาร บทเรียน และสื่อการสอนทั้งหมดได้ในที่เดียว</p>
+          <div class="meta-row">
+            <span class="meta-item"><strong id="statCategories">00</strong> หมวดหมู่</span>
+            <span class="meta-item"><strong id="statLinks">00</strong> เกมและลิงก์</span>
+            <span class="meta-item"><strong id="statFiles">00</strong> เอกสารและไฟล์</span>
+            <button type="button" class="jump-btn" id="exploreButton">ไปที่คลังสื่อทั้งหมด <span data-icon="ArrowUpRight"></span></button>
           </div>
-          <div class="today-label"><span class="today-icon">✦</span> Explore • Learn • Create</div>
-        </div>
-
-        <section class="hero" aria-label="พื้นที่การเรียนรู้ Go Robot">
-          <div class="hero-grid"></div>
-          <div class="hero-copy">
-            <div class="hero-kicker"><span class="hero-kicker-dot"></span> YOUR CREATIVE LEARNING SPACE</div>
-            <h2>เรียนรู้ให้สนุก<br><em>สร้างสรรค์ได้ไม่จำกัด.</em></h2>
-            <p>รวบรวมทุกเครื่องมือสำหรับนักสร้างหุ่นยนต์รุ่นใหม่<br class="desktop-only">พร้อมให้คุณค้นพบและเริ่มต้นได้ทุกเวลา</p>
-            <button type="button" class="hero-cta" id="exploreButton">สำรวจคลังสื่อ <span data-icon="ArrowUpRight"></span></button>
-          </div>
-          <div class="hero-art" aria-hidden="true">
-            <div class="art-orbit orbit-a"></div><div class="art-orbit orbit-b"></div><div class="art-halo"></div>
-            <div class="art-platform"></div>
-            <div class="art-robot">
-              <div class="art-robot-head"><span class="ant ant-left"></span><span class="ant ant-right"></span><span class="eye"></span><span class="eye"></span><span class="robot-mouth"></span></div>
-              <div class="art-robot-body"><div class="robot-core"><img src="./go-robot-logo.png" alt=""></div></div>
-            </div>
-            <div class="float-card card-a">🎮</div><div class="float-card card-b">📖</div><div class="float-card card-c">🏆</div>
-            <div class="art-star star-a">✦</div><div class="art-star star-b">✧</div>
-          </div>
-          <div class="hero-watermark">G<span>∞</span>ROBOT</div>
-        </section>
-
-        <div class="stats-grid">
-          <div class="stat-box"><span class="stat-icon purple" data-icon="Layers"></span><div><strong id="statCategories">00</strong><p>หมวดหมู่ทั้งหมด</p></div><span class="stat-arrow">↗</span></div>
-          <div class="stat-box"><span class="stat-icon blue" data-icon="Gamepad2"></span><div><strong id="statLinks">00</strong><p>เกมและลิงก์เว็บไซต์</p></div><span class="stat-arrow">↗</span></div>
-          <div class="stat-box"><span class="stat-icon orange" data-icon="FileText"></span><div><strong id="statFiles">00</strong><p>เอกสารและไฟล์</p></div><span class="stat-arrow">↗</span></div>
-        </div>
+        </header>
 
         <section class="section categories-section">
           <div class="section-heading">
