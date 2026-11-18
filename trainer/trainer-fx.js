@@ -1,14 +1,17 @@
-/* GO ROBOT Learning Vault — Trainer Loy Krathong FX
- * กระทงลอยน้ำ + พลุ + โดรนโชว์ข้อความ เป็น overlay โปร่งใสบนหน้า Trainer
- * - ไม่แตะพื้นหลังหน้าเดิม, คลิกทะลุได้ (pointer-events:none)
- * - ทำงานเฉพาะตอน #trainerView แสดงอยู่ (ไม่ต้องแก้ trainer.js)
- * - มีปุ่ม ✨ เปิด/ปิด มุมขวาล่าง (จำค่าไว้ในเครื่อง) */
+/* ==========================================================================
+ * GO ROBOT Learning Vault — Trainer Loy Krathong FX Overlay
+ * --------------------------------------------------------------------------
+ * Transparent canvas overlay (floating krathongs + fireworks + drone text).
+ * - Does not block clicks (pointer-events: none).
+ * - Only runs when #trainerView is visible.
+ * - Includes a bottom-right toggle button (state saved in localStorage).
+ * ========================================================================== */
 (function () {
   'use strict';
-  var TEXTS = ['GOROBOT', 'น้องฐา'];            // ข้อความโดรน
-  var COLORS = ['#5b4ce8', '#ec4899'];          // สีโดรนของแต่ละข้อความ
-  var HOLD = 8.5;                               // วินาทีที่ค้างแต่ละข้อความ
-  var KEY = 'trainerFxOn';
+  var TEXTS = ['GOROBOT', 'น้องฐา'];            // Drone formation texts
+  var COLORS = ['#5b4ce8', '#ec4899'];          // Drone colors for each text
+  var HOLD = 8.5;                               // Seconds to hold each text
+  var KEY = 'trainerFxOn';                      // localStorage key for toggle state
 
   var view, main, cv, ctx, btn;
   var W = 0, H = 0, DPR = 1, waterTop = 0;

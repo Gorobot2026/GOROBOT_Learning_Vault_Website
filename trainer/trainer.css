@@ -1,5 +1,201 @@
-/* GO ROBOT Learning Vault — Trainer (Student Review) view.
- * All rules are scoped under .trainer-view so they cannot clash with styles.css. */
+/* ==========================================================================
+ * GO ROBOT Learning Vault — Trainer Standalone Stylesheet
+ * --------------------------------------------------------------------------
+ * Combines:
+ *   1. Main-page Shell Layout (Sidebar, Topbar, Footer, Mobile Drawer)
+ *   2. Trainer View Styles (scoped under .trainer-view)
+ * ========================================================================== */
+
+/* ---------- 1. Global Theme Variables & Base Reset ---------- */
+:root{
+  --bg:#ffffff; --panel:#fbfbfc; --hover:#f3f3f6; --active:#ecebf3;
+  --line:#ebebf0; --line-2:#dcdce4;
+  --ink:#1c1c22; --ink-2:#44444f; --ink-3:#6e6e7a; --ink-4:#9d9da8;
+  --brand:#5b4ce8; --brand-700:#4636c9; --brand-50:#f5f3ff; --brand-100:#e9e5ff;
+  --green:#12a37a;
+  --r:8px; --r-lg:12px;
+  --font:'Prompt','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-en:'Inter','Prompt',-apple-system,sans-serif;
+  --sidebar-w:252px; --topbar-h:52px;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body.trainer-page{
+  margin:0;
+  font-family:var(--font);
+  font-size:14.5px;
+  line-height:1.6;
+  color:var(--ink);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,p{margin:0}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit;text-decoration:none}
+input{font:inherit;color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+svg{flex-shrink:0}
+
+/* ---------- 2. App Shell Layout (Sidebar + Main Area) ---------- */
+.app-shell{display:flex;min-height:100vh}
+.main-area{flex:1;min-width:0;margin-left:var(--sidebar-w);display:flex;flex-direction:column}
+.content{width:100%;max-width:1080px;margin:0 auto;padding:40px 40px 24px;flex:1}
+
+/* ---------- 3. Sidebar (Matches Main Page Look) ---------- */
+.sidebar{
+  position:fixed;
+  inset:0 auto 0 0;
+  width:var(--sidebar-w);
+  display:flex;
+  flex-direction:column;
+  padding:14px 10px 12px;
+  background:var(--panel);
+  border-right:1px solid var(--line);
+  z-index:50;
+  overflow:hidden;
+}
+.sidebar-top{display:flex;align-items:center;justify-content:space-between;padding:4px 8px 16px}
+.wordmark{display:flex;align-items:center;gap:10px;min-width:0}
+.brand-logo{width:40px;height:auto;display:block}
+.wordmark-copy{display:flex;flex-direction:column;line-height:1.15;font-family:var(--font-en)}
+.wordmark-copy strong{font-size:14px;font-weight:700;letter-spacing:.02em;color:var(--ink)}
+.wordmark-copy strong br{display:none}
+.wordmark-copy strong span{color:var(--brand);margin-left:4px}
+.wordmark-copy small{margin-top:2px;font-size:9.5px;font-weight:600;letter-spacing:.12em;color:var(--ink-4)}
+
+.nav-close{display:none;width:32px;height:32px;border-radius:var(--r);color:var(--ink-3)}
+.nav-close:hover{background:var(--hover)}
+
+.side-section-label{padding:6px 10px;font-size:11px;font-weight:600;letter-spacing:.06em;color:var(--ink-4)}
+.side-nav{display:flex;flex-direction:column;gap:1px;min-height:0}
+
+.side-link{
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  min-height:34px;
+  padding:5px 10px;
+  border-radius:var(--r);
+  font-size:14px;
+  color:var(--ink-2);
+  text-align:left;
+  transition:background .12s,color .12s;
+}
+.side-link .side-icon{display:grid;place-items:center;width:20px;height:20px;color:var(--ink-3)}
+.side-link .side-icon svg{width:18px;height:18px}
+.side-link:hover{background:var(--hover);color:var(--ink)}
+.side-link.active{background:var(--active);color:var(--ink);font-weight:600}
+.side-link.active .side-icon{color:var(--brand)}
+.side-link-trail{margin-left:auto;font-size:16px;line-height:1;color:var(--ink-4)}
+.side-link.active .side-link-trail{color:var(--ink-3)}
+
+.side-grow{flex:1}
+.sidebar-bottom{display:flex;flex-direction:column;gap:6px;padding-top:10px;border-top:1px solid var(--line)}
+.sidebar-footer{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  padding:6px 10px 0;
+  font-family:var(--font-en);
+  font-size:9px;
+  font-weight:600;
+  letter-spacing:.05em;
+  color:var(--ink-4);
+  white-space:nowrap;
+}
+.sidebar-footer span:last-child{margin-left:auto}
+.footer-led{width:6px;height:6px;border-radius:50%;background:var(--green)}
+
+/* ---------- 4. Sticky Topbar ---------- */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:40;
+  height:var(--topbar-h);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:0 24px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.mobile-brand{display:none;align-items:center;gap:8px}
+.icon-plain{width:36px;height:36px;border-radius:var(--r);font-size:19px;display:grid;place-items:center}
+.icon-plain:hover{background:var(--hover)}
+.mobile-brand-logo{height:28px;width:auto}
+
+.breadcrumb{font-size:13.5px;color:var(--ink-3)}
+.breadcrumb span{margin:0 6px;color:var(--ink-4)}
+.breadcrumb strong{font-weight:600;color:var(--ink)}
+
+.top-actions{display:flex;align-items:center;gap:10px}
+.system-pill{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-en);font-size:10.5px;font-weight:600;letter-spacing:.08em;color:var(--ink-3)}
+.live-pulse{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.top-back-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  height:32px;
+  padding:0 12px;
+  border-radius:var(--r);
+  border:1px solid var(--line-2);
+  background:#fff;
+  font-size:13px;
+  font-weight:500;
+  color:var(--ink-2);
+  transition:.12s;
+}
+.top-back-btn:hover{background:var(--hover);color:var(--ink)}
+.top-avatar{
+  display:grid;
+  place-items:center;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:var(--brand-100);
+  color:var(--brand-700);
+  font-family:var(--font-en);
+  font-size:11px;
+  font-weight:700;
+}
+
+/* ---------- 5. Footer, Mobile Backdrop & Toast ---------- */
+.page-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:56px;
+  padding:18px 0 4px;
+  border-top:1px solid var(--line);
+  font-size:12.5px;
+  color:var(--ink-4);
+}
+.footer-heart{color:var(--brand)}
+.mobile-scrim{position:fixed;inset:0;z-index:45;background:rgba(20,20,34,.4)}
+.trainer-toast{
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  z-index:300;
+  transform:translateX(-50%);
+  max-width:calc(100vw - 32px);
+  padding:10px 16px;
+  border-radius:var(--r);
+  background:var(--ink);
+  color:#fff;
+  font-size:13.5px;
+  box-shadow:0 12px 30px -10px rgba(0,0,0,.4);
+}
+
+/* ---------- 6. Trainer View (Scoped Component Styles) ---------- */
 .trainer-view[hidden]{display:none}
 .trainer-view{
   --brand-primary:#5b4ce8;--brand-primary-hover:#4a3bd6;--brand-primary-soft:#f2f0ff;--brand-primary-border:#dcd6fe;
@@ -18,20 +214,21 @@
 .trainer-view button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 .trainer-view input{font-family:inherit}
 .trainer-view button:focus-visible,.trainer-view input:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
+.trainer-view .eyebrow{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-en);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--brand-primary);margin-bottom:8px}
+.trainer-view .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--brand-primary)}
 .trainer-view .page-header{margin-bottom:24px}
 .trainer-view .page-title{font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--text-primary);margin:0}
 .trainer-view .page-subtitle{font-size:14px;color:var(--text-secondary);margin-top:4px}
 .trainer-view .gen-title{margin:0}
 .trainer-view a{text-decoration:none}
 
-/* ==================== Figma Drawer: Level Selector (Lv. 1 - Lv. 5) + Sort ==================== */
+/* Level Selector Bar (Lv. 1 - Lv. 5) + Sort Button */
 .trainer-view .level-drawer-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   padding-bottom: 18px;
-  /* Figma Line 1 divider, made clean and subtle */
   border-bottom: 1px solid var(--border-light);
   margin-bottom: 22px;
 }
@@ -77,6 +274,14 @@
   box-shadow: 0 4px 12px rgba(91, 76, 232, 0.25);
 }
 
+.trainer-view .drawer-controls {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.trainer-view .control-pill-btn,
 .trainer-view .sort-btn {
   flex-shrink: 0;
   display: inline-flex;
@@ -93,17 +298,25 @@
   transition: all 0.16s ease;
 }
 
+.trainer-view .control-pill-btn:hover,
 .trainer-view .sort-btn:hover {
   border-color: var(--brand-primary);
   color: var(--brand-primary);
   background: var(--brand-primary-soft);
 }
 
+.trainer-view .filter-btn.active {
+  background: var(--brand-primary);
+  color: #ffffff;
+  border-color: var(--brand-primary);
+  box-shadow: 0 4px 12px rgba(91, 76, 232, 0.25);
+}
+
 .trainer-view .sort-btn.desc svg {
   transform: scaleY(-1);
 }
 
-/* ==================== Figma Content Rows: Gen 1 - Gen 4 ==================== */
+/* Gen Cards List */
 .trainer-view .gen-list {
   display: flex;
   flex-direction: column;
@@ -178,7 +391,7 @@
   color: var(--brand-primary);
 }
 
-/* Figma Action Blocks (Teal = Upload Photo, Purple = Class Review) */
+/* Action Buttons (Teal = Photo Upload, Purple = Assessment Review) */
 .trainer-view .gen-card-actions {
   display: flex;
   align-items: center;
@@ -225,7 +438,7 @@
   box-shadow: 0 4px 12px rgba(124, 58, 237, 0.22);
 }
 
-/* ==================== Admin Section (Expandable Drawer per Gen) ==================== */
+/* Admin Drawer (Expandable URL editor per Gen card) */
 .trainer-view .admin-drawer {
   display: none;
   padding: 16px 24px 20px;
@@ -305,7 +518,7 @@
   box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14);
 }
 
-/* ปุ่มคัดลอกลิงก์ภายในกรอบช่องฟอร์ม */
+/* Copy Link Button inside Admin Input */
 .trainer-view .btn-copy-link {
   position: absolute;
   right: 7px;
@@ -352,7 +565,7 @@
   background: var(--text-muted);
 }
 
-/* Coming Soon Empty Box (Lv. 5) */
+/* Coming Soon Empty Box (e.g. Lv. 5) */
 .trainer-view .empty-coming-soon {
   background: var(--bg-surface);
   border: 1px dashed var(--border-medium);
@@ -368,7 +581,7 @@
   box-shadow: var(--shadow-xs);
 }
 
-/* Add Generation Footer Row (clean optional utility) */
+/* "+ Add Gen" Footer Button */
 .trainer-view .add-gen-row {
   margin-top: 16px;
   display: flex;
@@ -399,8 +612,24 @@
   cursor: not-allowed;
 }
 
+/* ---------- 7. Responsive Breakpoints ---------- */
+@media (max-width:900px){
+  .sidebar{transform:translateX(-100%);transition:transform .22s ease;width:min(290px,86vw)}
+  .sidebar.is-open{transform:none;box-shadow:0 0 50px rgba(20,20,40,.3)}
+  .nav-close{display:grid;place-items:center}
+  .main-area{margin-left:0}
+  .mobile-brand{display:flex}
+  .breadcrumb,.system-pill{display:none}
+  .topbar{padding:0 12px}
+  .content{padding:28px 18px 16px}
+}
+
 @media (max-width:640px){
+  .page-footer{flex-direction:column;align-items:flex-start}
   .trainer-view .page-title{font-size:22px}
+  .trainer-view .level-drawer-bar{flex-wrap:wrap}
+  .trainer-view .level-pills{flex:1 1 100%}
+  .trainer-view .drawer-controls{margin-left:auto}
   .trainer-view .gen-card-main{padding:16px;flex-direction:column;align-items:stretch;gap:14px}
   .trainer-view .gen-card-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .trainer-view .btn-action{justify-content:center;padding:10px 12px;font-size:13px}
@@ -409,3 +638,5 @@
   .trainer-view .admin-inputs{grid-template-columns:1fr}
   .trainer-view .btn-save-admin{align-self:flex-end}
 }
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}

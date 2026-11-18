@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5942b9">
+  <meta name="description" content="GO ROBOT Learning Vault — Trainer Student Review">
+  <title>Trainer — Student Review | GO ROBOT Learning Vault</title>
+
+  <!-- Google Fonts (Prompt for Thai + Inter for English/Numbers) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Relative paths only (required for GitHub Pages deployment) -->
+  <link rel="icon" type="image/png" href="../go-robot-logo.png">
+  <link rel="stylesheet" href="./trainer.css">
+
+  <!-- Load data first, then main Trainer logic, then optional FX overlay -->
+  <script src="./trainer-data.js" defer></script>
+  <script src="./trainer.js" defer></script>
+  <script src="./trainer-fx.js" defer></script>
+</head>
+<body class="trainer-page">
+  <!-- App Shell: matches the main page layout (Sidebar + Main Area) -->
+  <div class="app-shell">
+
+    <!-- ==================== Sidebar (Visual Shell Only) ==================== -->
+    <aside class="sidebar" id="sidebar" aria-label="Trainer Menu">
+      <div class="sidebar-top">
+        <a class="wordmark" href="../index.html" aria-label="Go to Learning Vault Home">
+          <img class="brand-logo" src="../go-robot-logo.png" alt="GO ROBOT Robotics and Coding" width="92" height="79">
+          <span class="wordmark-copy">
+            <strong>LEARNING<br><span>VAULT</span></strong>
+            <small>GO ROBOT PLATFORM</small>
+          </span>
+        </a>
+        <!-- Mobile close button (visible on screens <= 900px) -->
+        <button type="button" class="nav-close" id="closeMenu" aria-label="Close menu">✕</button>
+      </div>
+
+      <div class="side-section-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <!-- Link back to the main Learning Vault page -->
+        <a class="side-link" href="../index.html">
+          <span class="side-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>
+            </svg>
+          </span>
+          <span>ภาพรวม</span>
+          <span class="side-link-trail">›</span>
+        </a>
+
+        <!-- Active Trainer menu item -->
+        <a class="side-link active" href="./index.html" aria-current="page">
+          <span class="side-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </span>
+          <span>Trainer</span>
+          <span class="side-link-trail">›</span>
+        </a>
+      </nav>
+
+      <!-- Spacer pushes the footer to the bottom of the sidebar -->
+      <div class="side-grow"></div>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-footer">
+          <span class="footer-led"></span>
+          GO ROBOT TRAINER
+          <span>V2.0</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==================== Main Area (Topbar + Content) ==================== -->
+    <div class="main-area">
+      <!-- Sticky Topbar -->
+      <header class="topbar">
+        <div class="mobile-brand">
+          <button type="button" class="icon-plain" id="openMenu" aria-label="Open menu">☰</button>
+          <img class="mobile-brand-logo" src="../go-robot-logo.png" alt="GO ROBOT" width="55" height="47">
+        </div>
+
+        <div class="breadcrumb">Workspace <span>›</span> <strong>Trainer</strong></div>
+
+        <div class="top-actions">
+          <span class="system-pill"><span class="live-pulse"></span> TRAINER SPACE</span>
+          <a class="top-back-btn" href="../index.html">← กลับหน้าหลัก</a>
+          <span class="top-avatar">GR</span>
+        </div>
+      </header>
+
+      <!-- Page Content -->
+      <main class="content">
+        <!-- Trainer View (ID #trainerView is used by trainer.js and trainer-fx.js) -->
+        <section class="trainer-view" id="trainerView" aria-label="Trainer Student Review">
+          <div class="page-header">
+            <span class="eyebrow"><span class="eyebrow-dot"></span> TRAINER UTILITY</span>
+            <h1 class="page-title">Student Review</h1>
+            <p class="page-subtitle">รวมลิงก์สำหรับประเมินและอัปโหลดรูปภาพ</p>
+          </div>
+
+          <!-- Level Selector Pills (All, Lv. 1 - Lv. 5) + Filter & Sort Controls -->
+          <div class="level-drawer-bar" aria-label="Select course level, filter, and sort order">
+            <div id="levelPills" class="level-pills" role="tablist"></div>
+            <div class="drawer-controls">
+              <button id="filterLinkedBtn" type="button" class="control-pill-btn filter-btn" aria-pressed="false" aria-label="Show only cards with links" title="แสดงเฉพาะกล่องที่มีลิงก์">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                <span>มีลิงก์</span>
+              </button>
+              <button id="sortGenBtn" type="button" class="control-pill-btn sort-btn" aria-label="Toggle Gen sort order">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 6h13"></path><path d="M3 12h9"></path><path d="M3 18h5"></path><path d="M19 8v10"></path><path d="M16 15l3 3 3-3"></path>
+                </svg>
+                <span id="sortGenLabel">Gen ↑</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Gen Cards List (rendered dynamically by trainer.js) -->
+          <div id="genList" class="gen-list" aria-label="Gen list"></div>
+
+          <!-- Admin-only button to add a new Gen (up to MAX_GENS) -->
+          <div class="add-gen-row">
+            <button id="addGenBtn" type="button" class="btn-ghost-add">+ Add Gen</button>
+          </div>
+        </section>
+
+        <footer class="page-footer">
+          <span>© 2026 GO ROBOT • Learning Vault</span>
+          <span>Made for curious minds. <span class="footer-heart">✦</span></span>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <!-- Dark backdrop when mobile sidebar drawer is open -->
+  <div class="mobile-scrim" id="mobileScrim" hidden></div>
+
+  <!-- Standalone Toast notification -->
+  <div class="trainer-toast" id="trainerToast" role="status" hidden></div>
+</body>
+</html>

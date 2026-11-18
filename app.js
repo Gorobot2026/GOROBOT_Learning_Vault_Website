@@ -6,8 +6,7 @@
 
   const cfg = window.GOROBOT_CONFIG || {};
   const $ = (id) => document.getElementById(id);
-  // NEW: state.view = "home" (ภาพรวม) | "trainer"
-  const state = { categories: [], resources: [], category: "all", type: "all", query: "", loading: false, error: "", configured: false, view: "home" };
+  const state = { categories: [], resources: [], category: "all", type: "all", query: "", loading: false, error: "", configured: false };
 
   // NEW #comment [HIDE_ASSESSMENT]: หมวดหมู่ที่ชื่อมีคำเหล่านี้ (เช่น "Assessment Level 1/2")
   // จะถูกซ่อนจากหน้าภาพรวมทั้งหมด (เมนูด้านข้าง, การ์ดหมวดหมู่, ตัวกรอง, รายการสื่อ, ตัวเลขสถิติ)
@@ -77,8 +76,6 @@
     clearTimeout(toast.timer);
     toast.timer = setTimeout(() => { target.hidden = true; }, 3500);
   }
-  // NEW: เปิดให้ trainer.js ใช้ toast ตัวเดียวกัน
-  window.GoRobotToast = toast;
 
   function displayIcon(name, image, size = 27) {
     const url = validURL(image);
@@ -137,15 +134,12 @@
   }
   function renderNavigation() {
     const cats = displayedCategories();
-    const onHome = state.view === "home";
-    // NEW: ไฮไลต์หมวดหมู่/ภาพรวม เฉพาะตอนอยู่หน้าภาพรวม (ถ้าอยู่หน้า Trainer ให้ไฮไลต์ Trainer แทน)
-    $("sideCategoryNav").innerHTML = cats.map(c => `<button type="button" class="side-link category-side ${onHome && state.category===c.id?"active":""}" data-category="${esc(c.id)}">
+    $("sideCategoryNav").innerHTML = cats.map(c => `<button type="button" class="side-link category-side ${state.category===c.id?"active":""}" data-category="${esc(c.id)}">
       <span class="side-icon-tiny accent-${color(c.accent)}">${displayIcon(c.icon,c.imageUrl,15)}</span>
       <span class="nav-name">${esc(c.name)}</span><span class="side-count">${Number(c.count)||0}</span>
     </button>`).join("");
-    $("homeNav").classList.toggle("active", onHome && state.category === "all");
-    $("trainerNav").classList.toggle("active", !onHome);
-    $("breadcrumbLabel").textContent = onHome ? (categoryById(state.category)?.name || "Learning library") : "Trainer";
+    $("homeNav").classList.toggle("active", state.category === "all");
+    $("breadcrumbLabel").textContent = categoryById(state.category)?.name || "Learning library";
     $("categoryFilters").innerHTML = `<button type="button" data-category="all" class="${state.category==="all"?"active":""}">ทุกหมวดหมู่</button>` +
       state.categories.map(c=>`<button type="button" data-category="${esc(c.id)}" class="${state.category===c.id?"active":""}">${esc(c.name)}</button>`).join("");
     requestAnimationFrame(updateSidebarScrollHint);
@@ -179,22 +173,13 @@
     document.querySelectorAll(".resource-filters button").forEach(b=>b.classList.toggle("selected",b.dataset.type===state.type));
   }
 
-  // NEW: สลับระหว่างหน้า "ภาพรวม" (home) กับหน้า "Trainer"
-  function showView(view) {
-    state.view = view === "trainer" ? "trainer" : "home";
-    $("homeView").hidden = state.view !== "home";
-    $("trainerView").hidden = state.view !== "trainer";
-    renderNavigation();
-    closeMenu();
-  }
-
   function setCategory(id) {
     if (id !== "all" && !state.categories.some(c=>String(c.id)===String(id))) {
       toast("หมวดหมู่นี้จะพร้อมใช้งานหลังเชื่อมฐานข้อมูล");
       return;
     }
     state.category = id;
-    showView("home"); // NEW: ถ้าอยู่หน้า Trainer ให้กลับมาหน้าภาพรวมก่อน
+    closeMenu();
     render();
     smoothLibrary();
   }
@@ -258,9 +243,7 @@
       if (adminHref) { link.target="_blank";link.rel="noopener noreferrer"; }
       else link.addEventListener("click", e=>{e.preventDefault();toast("กรุณาตั้งค่า Apps Script URL ใน config.js ก่อน");});
     });
-    $("homeNav").addEventListener("click",()=>{state.category="all";showView("home");render();window.scrollTo({top:0,behavior:"smooth"});});
-    // NEW: กดเมนู Trainer
-    $("trainerNav").addEventListener("click",()=>{showView("trainer");window.scrollTo({top:0,behavior:"smooth"});});
+    $("homeNav").addEventListener("click",()=>{state.category="all";closeMenu();render();window.scrollTo({top:0,behavior:"smooth"});});
     $("exploreButton").addEventListener("click",smoothLibrary);
     $("searchInput").addEventListener("input",e=>{state.query=e.target.value;render();});
     $("openMenu").addEventListener("click",()=>{$("sidebar").classList.add("is-open");$("mobileScrim").hidden=false;});
