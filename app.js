@@ -184,6 +184,7 @@
     state.view = view === "trainer" ? "trainer" : "home";
     $("homeView").hidden = state.view !== "home";
     $("trainerView").hidden = state.view !== "trainer";
+    if (state.view === "trainer") window.dispatchEvent(new CustomEvent("gorobot:trainer-open"));
     renderNavigation();
     closeMenu();
   }

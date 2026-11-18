@@ -1,411 +1,79 @@
-/* GO ROBOT Learning Vault — Trainer (Student Review) view.
- * All rules are scoped under .trainer-view so they cannot clash with styles.css. */
-.trainer-view[hidden]{display:none}
+/* GO ROBOT Learning Vault • Refined Student Review, 2026
+   Scoped to .trainer-view to avoid collisions with the resource library. */
 .trainer-view{
-  --brand-primary:#5b4ce8;--brand-primary-hover:#4a3bd6;--brand-primary-soft:#f2f0ff;--brand-primary-border:#dcd6fe;
-  --action-photo:#0d9488;--action-photo-soft:#f0fdfa;--action-photo-border:#99f6e4;
-  --action-review:#7c3aed;--action-review-soft:#f5f3ff;--action-review-border:#ddd6fe;
-  --status-green:#10b981;--status-green-soft:#ecfdf5;
-  --bg-app:#f8f9fc;--bg-surface:#fff;--bg-subtle:#f1f5f9;--border-light:#e8ecf4;--border-medium:#d6deeb;
-  --text-primary:#0f172a;--text-secondary:#475569;--text-muted:#94a3b8;
-  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;--radius-pill:9999px;
-  --shadow-xs:0 1px 2px rgba(15,23,42,.04);--shadow-sm:0 2px 8px rgba(15,23,42,.04);
-  --shadow-md:0 10px 25px -5px rgba(15,23,42,.08),0 4px 10px -6px rgba(15,23,42,.04);
-  --shadow-focus:0 0 0 3px rgba(91,76,232,.16);
-  font-family:'Prompt','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  color:var(--text-primary);
+  --tv-ink:#171e34; --tv-muted:#798198; --tv-line:#e8ebf3;
+  --tv-purple:#6250de; --tv-purple-soft:#f3f1ff;
+  --tv-teal:#079d95; --tv-teal-soft:#e9f9f6;
+  --tv-radius:18px;
+  width:100%;max-width:1010px;margin:0 auto;color:var(--tv-ink);
+  font-family:'Prompt','Inter',sans-serif;
 }
-.trainer-view button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
-.trainer-view input{font-family:inherit}
-.trainer-view button:focus-visible,.trainer-view input:focus-visible{outline:none;box-shadow:var(--shadow-focus)}
-.trainer-view .page-header{margin-bottom:24px}
-.trainer-view .page-title{font-size:26px;font-weight:800;letter-spacing:-.02em;color:var(--text-primary);margin:0}
-.trainer-view .page-subtitle{font-size:14px;color:var(--text-secondary);margin-top:4px}
-.trainer-view .gen-title{margin:0}
-.trainer-view a{text-decoration:none}
-
-/* ==================== Figma Drawer: Level Selector (Lv. 1 - Lv. 5) + Sort ==================== */
-.trainer-view .level-drawer-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 18px;
-  /* Figma Line 1 divider, made clean and subtle */
-  border-bottom: 1px solid var(--border-light);
-  margin-bottom: 22px;
+.trainer-view[hidden]{display:none!important}
+.trainer-view button{font:inherit;cursor:pointer}
+.trainer-view .trainer-hero{min-height:164px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:28px 33px;margin-bottom:26px;background:linear-gradient(112deg,#faf9ff 0%,#f7f9ff 60%,#f0fafa 100%);border:1px solid #ededfa;border-radius:23px;position:relative;overflow:hidden}
+.trainer-view .trainer-hero:after{content:"";position:absolute;right:-68px;top:-116px;width:250px;height:250px;border-radius:50%;border:46px solid rgba(105,89,222,.045);pointer-events:none}
+.trainer-view .trainer-eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:8px;color:#6350d6;font:800 10px 'Inter','Prompt',sans-serif;letter-spacing:.14em}
+.trainer-view .trainer-eyebrow-dot{display:block;width:7px;height:7px;background:#6756e6;border-radius:100%}
+.trainer-view .page-title{font:800 clamp(23px,3vw,31px) 'Inter','Prompt',sans-serif;letter-spacing:-.04em;line-height:1.25;color:#17213b;margin:0 0 8px}
+.trainer-view .page-title span{color:#6250de}
+.trainer-view .page-subtitle{font-size:13px;color:#6e7891;line-height:1.7;max-width:580px;margin:0}
+.trainer-view .trainer-hero-symbol{width:92px;height:92px;border-radius:27px;display:grid;place-items:center;flex:none;color:#705fe0;background:#fff;border:1px solid #ece7ff;box-shadow:0 14px 40px rgba(104,82,223,.08)}
+.trainer-view .trainer-hero-symbol svg{width:74px;height:74px}
+.trainer-view .trainer-tools{margin-bottom:19px}
+.trainer-view .trainer-tool-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.trainer-view .trainer-tool-title strong{font-size:14px;font-weight:700;color:#2a3550}
+.trainer-view .trainer-tool-title span{font:500 11.5px 'Prompt',sans-serif;color:var(--tv-muted)}
+.trainer-view .level-drawer-bar{display:flex;align-items:center;gap:12px;justify-content:space-between;padding-bottom:19px;border-bottom:1px solid var(--tv-line)}
+.trainer-view .level-pills{display:flex;gap:8px;align-items:center;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.trainer-view .level-pills::-webkit-scrollbar{display:none}
+.trainer-view .level-pill{min-width:75px;padding:10px 18px;border:1px solid #e5e8f1;border-radius:12px;background:#fff;color:#606b81;box-shadow:0 1px 2px rgba(20,30,55,.025);font-weight:600;font-size:12.5px;flex:none;transition:.18s ease}
+.trainer-view .level-pill:hover{border-color:#c6bdfb;background:#faf9ff;color:var(--tv-purple)}
+.trainer-view .level-pill.active{background:var(--tv-purple);border-color:var(--tv-purple);color:#fff;box-shadow:0 5px 12px rgba(98,80,222,.2)}
+.trainer-view .sort-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:none;padding:10px 14px;border:1px solid #e5e8f1;border-radius:12px;background:#fff;color:#657089;font-size:12px;font-weight:600;transition:.18s ease}
+.trainer-view .sort-btn:hover{background:#f8f7ff;color:#6250de;border-color:#cbc5f5}
+.trainer-view .sort-btn.desc svg{transform:scaleY(-1)}
+.trainer-view .gen-list{display:flex;flex-direction:column;gap:12px}
+.trainer-view .gen-card{background:#fff;border:1px solid #e9ecf3;border-radius:var(--tv-radius);box-shadow:0 4px 16px rgba(33,46,87,.035);transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.trainer-view .gen-card:hover{border-color:#d9d7f4;box-shadow:0 12px 28px rgba(51,58,111,.075);transform:translateY(-1px)}
+.trainer-view .gen-card-main{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px 20px}
+.trainer-view .gen-card-left{display:flex;align-items:center;gap:14px;min-width:0}
+.trainer-view .gen-number-badge{width:48px;height:48px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:14px;background:var(--tv-purple-soft);color:var(--tv-purple);font:800 16px 'Inter','Prompt',sans-serif}
+.trainer-view .gen-card-titles{min-width:0}
+.trainer-view .gen-title{font:750 16px 'Inter','Prompt',sans-serif;letter-spacing:-.02em;color:#202943;margin:0 0 4px}
+.trainer-view .gen-meta{display:inline-flex;align-items:center;gap:7px;font-size:11px;color:#8b94a7}
+.trainer-view .gen-state-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#c9ced9}
+.trainer-view .gen-state-dot.ready{background:#17b89a}.trainer-view .gen-state-dot.partial{background:#f2b45e}
+.trainer-view .gen-card-actions{display:flex;gap:10px;align-items:center;flex:none}
+.trainer-view .trainer-action{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-width:130px;min-height:44px;padding:10px 13px;border-radius:12px;border:1px solid transparent;font-size:12px;font-weight:650;white-space:nowrap;transition:background .15s ease,border-color .15s ease,transform .15s ease;color:inherit;text-decoration:none}
+.trainer-view a.trainer-action:hover{transform:translateY(-1px)}
+.trainer-view .trainer-action--photo{background:var(--tv-teal-soft);color:#087e77;border-color:#c9f1ea}
+.trainer-view a.trainer-action--photo:hover{background:#d7f6ef;border-color:#91e7d9}
+.trainer-view .trainer-action--review{background:#f5f1ff;color:#6b48d6;border-color:#e6dfff}
+.trainer-view a.trainer-action--review:hover{background:#ebe4ff;border-color:#cdbcfb}
+.trainer-view .trainer-action .action-arrow{display:inline-flex;opacity:.63}
+.trainer-view .trainer-action--empty{background:#fafbfc;color:#a0a8b5;border-color:#eef0f4;cursor:default}
+.trainer-view .action-missing{display:none}
+.trainer-view .trainer-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:180px;border:1px dashed #dcdff0;border-radius:var(--tv-radius);background:#fcfcff;color:#8b91aa;text-align:center}
+.trainer-view .trainer-empty strong{color:#5b637e;font-size:14px}.trainer-view .trainer-empty span{font-size:11px}
+.trainer-view .trainer-bottom-bar{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 2px 6px}
+.trainer-view .trainer-live-status{display:flex;align-items:center;gap:9px;min-width:0;color:#8790a2;font-size:11.5px}
+.trainer-view .trainer-live-dot{display:block;width:7px;height:7px;background:#22b59b;border-radius:50%;flex:none;box-shadow:0 0 0 3px #e7f8f2}
+.trainer-view .trainer-live-status:has(.is-error) .trainer-live-dot{background:#e49e55;box-shadow:0 0 0 3px #fff4e8}
+.trainer-view .trainer-bottom-actions{display:flex;align-items:center;gap:17px;flex:none}
+.trainer-view .trainer-text-button,.trainer-view .trainer-admin-link{display:inline-flex;align-items:center;color:#6e7391;font-size:11.5px;font-weight:600;transition:color .15s ease}
+.trainer-view .trainer-text-button:hover:not(:disabled),.trainer-view .trainer-admin-link:hover{color:#5b4ce8}
+.trainer-view .trainer-text-button:disabled{opacity:.45;cursor:wait}
+@media(max-width:880px){.trainer-view .gen-card-main{padding:16px}.trainer-view .trainer-action{min-width:116px}.trainer-view .trainer-hero{padding:26px}}
+@media(max-width:630px){
+  .trainer-view .trainer-hero{padding:22px 21px;border-radius:17px;min-height:auto}
+  .trainer-view .trainer-hero-symbol{width:64px;height:64px;border-radius:17px}.trainer-view .trainer-hero-symbol svg{width:55px;height:55px}
+  .trainer-view .page-title{font-size:24px}.trainer-view .page-subtitle{font-size:11.5px}
+  .trainer-view .trainer-tool-title{align-items:flex-start;flex-direction:column;gap:4px}
+  .trainer-view .level-pill{min-width:64px;padding:9px 13px}.trainer-view .sort-btn{padding:9px 10px}
+  .trainer-view .gen-card-main{flex-direction:column;align-items:stretch;gap:15px}
+  .trainer-view .gen-card-actions{display:grid;grid-template-columns:1fr 1fr}
+  .trainer-view .trainer-action{width:100%;min-width:0;gap:6px;font-size:11.5px;padding:10px}
+  .trainer-view .trainer-bottom-bar{align-items:flex-start;flex-direction:column;gap:13px}
+  .trainer-view .trainer-bottom-actions{width:100%;justify-content:space-between;gap:12px;flex-wrap:wrap}
 }
-
-.trainer-view .level-pills {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  overflow-x: auto;
-  padding: 2px 0;
-  scrollbar-width: none;
-  flex: 1;
-  min-width: 0;
-}
-
-.trainer-view .level-pills::-webkit-scrollbar {
-  display: none;
-}
-
-.trainer-view .level-pill {
-  flex-shrink: 0;
-  padding: 8px 20px;
-  border-radius: var(--radius-pill);
-  font-size: 13.5px;
-  font-weight: 600;
-  background: var(--bg-surface);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-medium);
-  transition: all 0.16s ease;
-  box-shadow: var(--shadow-xs);
-}
-
-.trainer-view .level-pill:hover {
-  border-color: var(--brand-primary);
-  color: var(--brand-primary);
-  background: var(--brand-primary-soft);
-}
-
-.trainer-view .level-pill.active {
-  background: var(--brand-primary);
-  color: #ffffff;
-  border-color: var(--brand-primary);
-  box-shadow: 0 4px 12px rgba(91, 76, 232, 0.25);
-}
-
-.trainer-view .sort-btn {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 14px;
-  border-radius: var(--radius-pill);
-  font-size: 13px;
-  font-weight: 600;
-  background: var(--bg-surface);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-medium);
-  box-shadow: var(--shadow-xs);
-  transition: all 0.16s ease;
-}
-
-.trainer-view .sort-btn:hover {
-  border-color: var(--brand-primary);
-  color: var(--brand-primary);
-  background: var(--brand-primary-soft);
-}
-
-.trainer-view .sort-btn.desc svg {
-  transform: scaleY(-1);
-}
-
-/* ==================== Figma Content Rows: Gen 1 - Gen 4 ==================== */
-.trainer-view .gen-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.trainer-view .gen-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-  overflow: hidden;
-  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
-}
-
-.trainer-view .gen-card:hover {
-  border-color: var(--border-medium);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-}
-
-.trainer-view .gen-card.expanded {
-  border-color: var(--brand-primary-border);
-  box-shadow: var(--shadow-md);
-}
-
-.trainer-view .gen-card-main {
-  padding: 18px 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  cursor: pointer;
-}
-
-.trainer-view .gen-card-left {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  min-width: 0;
-}
-
-.trainer-view .gen-number-badge {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: var(--brand-primary-soft);
-  color: var(--brand-primary);
-  font-size: 15px;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.trainer-view .gen-title {
-  font-size: 17px;
-  font-weight: 700;
-  color: var(--text-primary);
-}
-
-.trainer-view .gen-chevron {
-  color: var(--text-muted);
-  display: inline-flex;
-  align-items: center;
-  transition: transform 0.2s ease, color 0.15s ease;
-}
-
-.trainer-view .gen-card.expanded .gen-chevron {
-  transform: rotate(180deg);
-  color: var(--brand-primary);
-}
-
-/* Figma Action Blocks (Teal = Upload Photo, Purple = Class Review) */
-.trainer-view .gen-card-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-}
-
-.trainer-view .btn-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: var(--radius-md);
-  font-size: 13.5px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all 0.16s ease;
-  border: 1px solid transparent;
-}
-
-.trainer-view .btn-photo {
-  background: var(--action-photo-soft);
-  color: var(--action-photo);
-  border-color: var(--action-photo-border);
-}
-
-.trainer-view .btn-photo:hover {
-  background: var(--action-photo);
-  color: #ffffff;
-  border-color: var(--action-photo);
-  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.22);
-}
-
-.trainer-view .btn-review {
-  background: var(--action-review-soft);
-  color: var(--action-review);
-  border-color: var(--action-review-border);
-}
-
-.trainer-view .btn-review:hover {
-  background: var(--action-review);
-  color: #ffffff;
-  border-color: var(--action-review);
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.22);
-}
-
-/* ==================== Admin Section (Expandable Drawer per Gen) ==================== */
-.trainer-view .admin-drawer {
-  display: none;
-  padding: 16px 24px 20px;
-  background: var(--bg-app);
-  border-top: 1px solid var(--border-light);
-}
-
-.trainer-view .gen-card.expanded .admin-drawer {
-  display: block;
-  animation: drawerSlideDown 0.16s ease-out;
-}
-
-@keyframes drawerSlideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.trainer-view .admin-form {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.trainer-view .admin-inputs {
-  flex: 1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  min-width: 0;
-}
-
-.trainer-view .admin-input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.trainer-view .admin-input {
-  width: 100%;
-  padding: 10px 44px 10px 14px;
-  border-radius: var(--radius-md);
-  font-family: inherit;
-  font-size: 13.5px;
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  border: 1.5px solid var(--border-medium);
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-
-.trainer-view .admin-input::placeholder {
-  color: var(--text-muted);
-}
-
-.trainer-view .admin-input-photo {
-  border-color: var(--action-photo-border);
-  background: #fcfffe;
-}
-
-.trainer-view .admin-input-photo:focus {
-  border-color: var(--action-photo);
-  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.14);
-}
-
-.trainer-view .admin-input-review {
-  border-color: var(--action-review-border);
-  background: #fdfcff;
-}
-
-.trainer-view .admin-input-review:focus {
-  border-color: var(--action-review);
-  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.14);
-}
-
-/* ปุ่มคัดลอกลิงก์ภายในกรอบช่องฟอร์ม */
-.trainer-view .btn-copy-link {
-  position: absolute;
-  right: 7px;
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  background: transparent;
-  transition: background-color 0.15s ease, color 0.15s ease;
-}
-
-.trainer-view .btn-copy-link:hover {
-  background: var(--bg-subtle);
-  color: var(--text-primary);
-}
-
-.trainer-view .btn-copy-link.copied {
-  background: var(--status-green-soft);
-  color: var(--status-green);
-}
-
-.trainer-view .btn-save-admin {
-  flex-shrink: 0;
-  padding: 10px 20px;
-  border-radius: var(--radius-md);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #ffffff;
-  background: var(--brand-primary);
-  transition: background-color 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
-}
-
-.trainer-view .btn-save-admin:hover:not(:disabled) {
-  background: var(--brand-primary-hover);
-  box-shadow: 0 4px 12px rgba(91, 76, 232, 0.24);
-}
-
-.trainer-view .btn-save-admin:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  background: var(--text-muted);
-}
-
-/* Coming Soon Empty Box (Lv. 5) */
-.trainer-view .empty-coming-soon {
-  background: var(--bg-surface);
-  border: 1px dashed var(--border-medium);
-  border-radius: var(--radius-lg);
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: var(--text-muted);
-  box-shadow: var(--shadow-xs);
-}
-
-/* Add Generation Footer Row (clean optional utility) */
-.trainer-view .add-gen-row {
-  margin-top: 16px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.trainer-view .btn-ghost-add {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--text-secondary);
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  border: 1px dashed var(--border-medium);
-  transition: all 0.15s ease;
-}
-
-.trainer-view .btn-ghost-add:hover:not(:disabled) {
-  color: var(--brand-primary);
-  border-color: var(--brand-primary);
-  background: var(--brand-primary-soft);
-}
-
-.trainer-view .btn-ghost-add:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-@media (max-width:640px){
-  .trainer-view .page-title{font-size:22px}
-  .trainer-view .gen-card-main{padding:16px;flex-direction:column;align-items:stretch;gap:14px}
-  .trainer-view .gen-card-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-  .trainer-view .btn-action{justify-content:center;padding:10px 12px;font-size:13px}
-  .trainer-view .admin-drawer{padding:14px 16px 16px}
-  .trainer-view .admin-form{flex-direction:column;align-items:stretch}
-  .trainer-view .admin-inputs{grid-template-columns:1fr}
-  .trainer-view .btn-save-admin{align-self:flex-end}
-}
+@media(prefers-reduced-motion:reduce){.trainer-view *, .trainer-view *::before, .trainer-view *::after{transition:none!important;animation:none!important}}

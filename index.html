@@ -17,8 +17,7 @@
   <script src="./app.js" defer></script>
   <!-- NEW: สคริปต์หน้า Trainer (ต้องโหลดหลัง app.js) -->
   <script src="./trainer.js" defer></script>
-  <!-- NEW: เอฟเฟกต์ลอยกระทง + พลุ + โดรนโชว์ข้อความ ในหน้า Trainer -->
-  <script src="./trainer-fx.js" defer></script>
+  <!-- ปิดเอฟเฟกต์ลอยกระทงเพื่อให้หน้า Trainer ดูสะอาดตา (ไฟล์เดิมยังเก็บไว้) -->
 </head>
 <body>
   <div class="app-shell">
@@ -73,29 +72,35 @@
       </header>
 
       <main class="content">
-        <!-- NEW: หน้า Trainer / Student Review (แสดงเมื่อกดเมนู Trainer) -->
+        <!-- Trainer • Dynamic links from Google Sheets -->
         <section class="trainer-view" id="trainerView" hidden aria-label="Trainer Student Review">
-          <div class="page-header">
-            <span class="eyebrow"><span class="eyebrow-dot"></span> TRAINER UTILITY</span>
-            <h1 class="page-title">Student Review</h1>
-            <p class="page-subtitle">รวมลิงก์สำหรับประเมินและอัปโหลดรูปภาพ</p>
+          <div class="trainer-hero">
+            <div class="trainer-hero-copy">
+              <span class="trainer-eyebrow"><span class="trainer-eyebrow-dot"></span> TRAINER WORKSPACE</span>
+              <h1 class="page-title">Student <span>Review</span></h1>
+              <p class="page-subtitle">เลือก Level และ Gen เพื่ออัปโหลดรูปภาพหรือเปิดแบบประเมินได้ทันที</p>
+            </div>
+            <div class="trainer-hero-symbol" aria-hidden="true">
+              <svg viewBox="0 0 78 78" fill="none"><rect x="12" y="13" width="54" height="54" rx="18" stroke="currentColor" stroke-width="2"/><rect x="24" y="25" width="30" height="27" rx="6" stroke="currentColor" stroke-width="2"/><path d="m31 41 5 5 10-13" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="57" cy="20" r="9" fill="#e2dcff"/></svg>
+            </div>
           </div>
-
-          <div class="level-drawer-bar" aria-label="เลือกระดับหลักสูตรและเรียงลำดับ">
-            <div id="levelPills" class="level-pills" role="tablist"></div>
-            <button id="sortGenBtn" type="button" class="sort-btn" aria-label="สลับการเรียงลำดับ Gen">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 6h13"></path><path d="M3 12h9"></path><path d="M3 18h5"></path><path d="M19 8v10"></path><path d="M16 15l3 3 3-3"></path>
-              </svg>
-              <span id="sortGenLabel">Gen ↑</span>
-            </button>
+          <div class="trainer-tools">
+            <div class="trainer-tool-title"><strong>เลือกระดับการเรียน</strong><span id="trainerSummary">กำลังโหลด...</span></div>
+            <div class="level-drawer-bar" aria-label="เลือกระดับหลักสูตรและเรียงลำดับ">
+              <div id="levelPills" class="level-pills" role="group" aria-label="Level"></div>
+              <button id="sortGenBtn" type="button" class="sort-btn" aria-label="สลับการเรียงลำดับ Gen">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h13M3 12h9M3 18h5M19 7v11m-3-3 3 3 3-3"/></svg>
+                <span id="sortGenLabel">Gen ↑</span>
+              </button>
+            </div>
           </div>
-
           <div id="genList" class="gen-list" aria-label="รายการกลุ่มเรียน"></div>
-
-          <!-- #comment [ADMIN_ONLY] ซ่อนปุ่มนี้ถ้าต้องการจำกัด CRUD -->
-          <div class="add-gen-row">
-            <button id="addGenBtn" type="button" class="btn-ghost-add">+ Add Gen</button>
+          <div class="trainer-bottom-bar">
+            <div class="trainer-live-status"><span class="trainer-live-dot"></span><span id="trainerDataStatus">กำลังเชื่อมต่อ...</span></div>
+            <div class="trainer-bottom-actions">
+              <button type="button" id="trainerRefreshBtn" class="trainer-text-button" title="โหลดลิงก์ล่าสุดจาก Google Sheets">↻ อัปเดตลิงก์</button>
+              <a id="trainerManageLink" class="trainer-admin-link" href="#">จัดการลิงก์สำหรับ Admin ↗</a>
+            </div>
           </div>
         </section>
 
